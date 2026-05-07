@@ -18,691 +18,229 @@
   --fg12:rgba(255,255,255,.12);--fg08:rgba(255,255,255,.08);
   --fg05:rgba(255,255,255,.05);--fg03:rgba(255,255,255,.03);
   --surf:#0f0f0f;--surf2:#161616;
-  --eo:cubic-bezier(.16,1,.3,1);--es:cubic-bezier(.4,0,.2,1);
 }
-html,body{height:100%;background:var(--bg);overflow:hidden;position:fixed;width:100%}
-body{font-family:var(--f);color:var(--fg);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
-input[type="file"]{display:none}
-#app{height:100%;width:100%;max-width:430px;margin:0 auto;position:relative;overflow:visible}
+html,body{height:100%;background:var(--bg);margin:0}
+body{font-family:var(--f);color:var(--fg);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
 
-.scr{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateX(24px);transition:opacity .4s var(--es),transform .4s var(--eo);pointer-events:none}
-.scr.on{opacity:1;transform:none;pointer-events:auto}
-.scr.out{opacity:0;transform:translateX(-24px)}
+/* App — simple scrollable page */
+#app{width:100%;max-width:430px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
 
-/* ==== UPLOAD ==== */
-.up{align-items:center;justify-content:center;padding:40px 28px}
-.up__zone{
-  width:100%;max-width:240px;aspect-ratio:9/16;
-  border:1px solid var(--fg05);border-radius:20px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .5s;background:var(--fg03);position:relative;overflow:hidden;
-}
-.up__zone:active{border-color:var(--fg12);transform:scale(.99)}
-.up__ic{width:34px;height:34px;border-radius:50%;border:1px solid var(--fg05);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
-.up__ic svg{width:14px;height:14px;stroke:var(--fg25);fill:none;stroke-width:1.5}
-.up__lb{font-weight:300;font-size:11px;color:var(--fg25);letter-spacing:.5px}
-.up__hn{font-weight:300;font-size:9px;color:var(--fg12);margin-top:4px}
-.up__ft{position:absolute;bottom:max(env(safe-area-inset-bottom,24px),24px);font-size:8px;font-weight:500;letter-spacing:6px;color:var(--fg05)}
+/* Header */
+.hd{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--fg03);flex-shrink:0}
+.hd__logo{font-weight:500;font-size:9px;letter-spacing:5px;color:var(--fg20)}
+.hd__ex{background:var(--fg);color:var(--bg);border:none;font-family:var(--f);font-size:8px;font-weight:500;letter-spacing:3px;text-transform:uppercase;padding:8px 20px;border-radius:40px;cursor:pointer;transition:all .3s}
+.hd__ex:active{opacity:.7;transform:scale(.97)}
 
-/* ==== CUSTOMIZE ==== */
-.cu{background:var(--bg);overflow:hidden!important}
-.cu__hd{padding:10px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--fg03);flex-shrink:0}
-.cu__bk{background:none;border:none;color:var(--fg);font-family:var(--f);font-size:18px;font-weight:200;cursor:pointer;padding:6px 8px;opacity:.2;transition:opacity .3s;line-height:1}
-.cu__bk:active{opacity:.6}
-.cu__md{font-weight:400;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--fg20)}
-.cu__ex{background:var(--fg);color:var(--bg);border:none;font-family:var(--f);font-size:8px;font-weight:500;letter-spacing:3px;text-transform:uppercase;padding:7px 18px;border-radius:40px;cursor:pointer;transition:all .4s}
-.cu__ex:active{opacity:.7;transform:scale(.97)}
+/* Main scrollable area */
+.main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 env(safe-area-inset-bottom,20px)}
 
 /* Preview */
-.cu__pv{flex:0 0 auto;padding:8px 16px 4px;display:flex;justify-content:center}
-.pv{position:relative;width:100%;max-width:250px;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:var(--surf);box-shadow:0 16px 48px rgba(0,0,0,.5)}
-.pv__m{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-video.pv__m{object-fit:cover}
-.pv__scr{position:absolute;bottom:3%;left:6%;right:6%;z-index:12;-webkit-appearance:none;appearance:none;height:2px;background:var(--fg08);border-radius:2px;outline:none;opacity:0;transition:opacity .3s}
-.pv__scr.sh{opacity:1}
-.pv__scr::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--fg);cursor:pointer}
+.pv-wrap{padding:16px 20px 12px;display:flex;justify-content:center}
+.pv{position:relative;width:100%;max-width:200px;aspect-ratio:9/16;border-radius:12px;background:#0a0a0a;border:1px solid var(--fg05);overflow:hidden}
+.pv__ct{position:absolute;top:0;bottom:0;left:0;right:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:10% 9%}
+.pv__nm{font-weight:600;font-size:clamp(11px,3.2vw,15px);line-height:1.15;color:var(--fg);margin-bottom:2px}
+.pv__cu{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px}
+.pv__c{font-size:clamp(5px,1.2vw,7px);font-weight:400;letter-spacing:.3px;padding:3px 6px;border-radius:9px;background:rgba(0,0,0,.12);border:1px solid var(--fg12);color:rgba(255,255,255,.6);white-space:nowrap;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.pv__info{font-weight:300;font-size:clamp(5px,1.1vw,7px);color:var(--fg25);letter-spacing:1px}
+.pv__mk{margin-top:10px;font-weight:500;font-size:clamp(7px,1.4vw,9px);letter-spacing:4px;color:var(--fg25)}
 
-/* Signature Layer Canvas */
-.pv__sig{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 1s}
-.pv.live .pv__sig{opacity:1}
+/* Fields */
+.fields{padding:0 20px}
+.field{margin-bottom:10px}
+.field__row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.field__label{font-size:7px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:var(--fg12);flex:1}
+.field__tog{width:32px;height:18px;border-radius:9px;border:none;background:var(--fg08);position:relative;cursor:pointer;transition:background .3s;flex-shrink:0}
+.field__tog.on{background:rgba(255,255,255,.25)}
+.field__tog::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--fg25);transition:all .3s}
+.field__tog.on::after{left:16px;background:var(--fg)}
+.field__input{width:100%;background:var(--surf);border:1px solid var(--fg03);border-radius:10px;padding:11px 14px;color:var(--fg60);font-family:var(--f);font-size:13px;font-weight:300;outline:none;transition:border-color .3s}
+.field__input:focus{border-color:var(--fg08)}
+.field__input::placeholder{color:var(--fg12)}
+.field__input--s{font-size:11px;padding:9px 12px}
+.field__slider{width:100%;-webkit-appearance:none;appearance:none;height:2px;background:var(--fg08);border-radius:2px;outline:none}
+.field__slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--fg);cursor:pointer}
+.field__pair{display:flex;gap:8px}
+.field__pair .field{flex:1}
 
-/* Content Stack */
-.pv__ct{position:absolute;bottom:0;left:0;right:0;padding:0 7% 11%;display:flex;flex-direction:column;pointer-events:none;z-index:5}
-.pv__nm{font-weight:600;font-size:clamp(10px,2.6vw,13px);line-height:1.15;color:var(--fg);margin-bottom:2px;text-shadow:0 2px 14px rgba(0,0,0,.5)}
-.pv__du{font-weight:300;font-size:clamp(6px,1.4vw,9px);color:var(--fg25);letter-spacing:1.5px;margin-bottom:4px}
-.pv__cu{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px}
-.pv__c{font-size:clamp(5px,1.1vw,7px);font-weight:400;letter-spacing:.3px;padding:3px 6px;border-radius:9px;background:rgba(0,0,0,.12);border:1px solid var(--fg12);color:rgba(255,255,255,.6);white-space:nowrap;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.pv__wk{font-weight:400;font-size:clamp(6px,1.2vw,8px);letter-spacing:2px;text-transform:uppercase;color:var(--fg12);margin-bottom:5px}
-/* Endurance metrics row */
-.pv__mt{display:flex;gap:6px;margin-bottom:4px}
-.pv__mv{display:flex;flex-direction:column}
-.pv__ml{font-size:clamp(4px,.7vw,5px);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg12);margin-bottom:1px}
-.pv__md{font-weight:500;font-size:clamp(8px,1.8vw,11px);color:rgba(255,255,255,.8);letter-spacing:.3px}
-/* VOLTR Mark */
-.pv__mk{font-weight:500;font-size:clamp(7px,1.3vw,9px);letter-spacing:4px;color:var(--fg25)}
-
-/* Mini overlay mode */
-.pv.mini .pv__ct{padding-bottom:10%}
-.pv.mini .pv__nm{font-size:clamp(9px,2.2vw,11px);font-weight:500;margin-bottom:3px}
-.pv.mini .pv__du{font-size:clamp(8px,1.6vw,10px);margin-bottom:3px}
-.pv.mini .pv__cu{display:none}.pv.mini .pv__wk{display:none}
-.pv.mini .pv__mt .pv__ml{display:none}
-.pv.mini .pv__md{font-size:clamp(8px,1.8vw,11px)}
-.pv.mini .pv__mk{font-size:clamp(7px,1.2vw,9px)}
-
-/* Sticker mode */
-.pv.stk{background:#0a0a0a;border:1px solid var(--fg05)}
-.pv.stk .pv__m{display:none!important}
-.pv.stk .pv__ct{justify-content:center;align-items:flex-start;text-align:left;padding:10% 9%;bottom:0;top:0;height:100%}
-.pv.stk .pv__nm{font-size:clamp(11px,3vw,15px);margin-bottom:2px;text-shadow:0 2px 16px rgba(0,0,0,.5)}
-.pv.stk .pv__cu{margin-bottom:3px}
-.pv.stk .pv__du{margin-bottom:4px}
-.pv.stk .pv__mk{margin-top:12px}
-
-/* Variant Tabs */
-.vtab{display:flex;gap:0;margin:6px 16px 0;background:var(--surf);border-radius:7px;padding:2px;flex-shrink:0}
-.vt{flex:1;padding:6px 0;text-align:center;font-size:8px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--fg25);background:none;border:none;border-radius:5px;cursor:pointer;transition:all .4s;font-family:var(--f)}
-.vt.on{background:var(--fg05);color:var(--fg60)}
-
-/* Controls */
-.cu__sc{flex:1;min-height:0;overflow-y:scroll;-webkit-overflow-scrolling:touch;touch-action:pan-y}
-.cu__ct{padding:10px 20px 90px}
-.cg{margin-bottom:10px}
-.cl{font-size:7px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:var(--fg12);margin-bottom:5px}
-.ci{width:100%;background:var(--surf);border:1px solid var(--fg03);border-radius:10px;padding:11px 14px;color:var(--fg60);font-family:var(--f);font-size:13px;font-weight:300;outline:none;transition:border-color .4s}
-.ci:focus{border-color:var(--fg08)}
-.ci::placeholder{color:var(--fg12);font-weight:300}
-.ci--s{font-size:11px;padding:9px 12px}
-.cr{display:flex;gap:8px}
-.cr .cg{flex:1}
+/* Suggestions */
 .sg{display:none;flex-wrap:wrap;gap:3px;margin-top:5px}
 .sg.sh{display:flex}
 .sgc{font-size:9px;font-weight:300;padding:4px 10px;border-radius:14px;background:var(--surf2);border:1px solid var(--fg03);color:var(--fg25);cursor:pointer;transition:all .3s;font-family:var(--f)}
-.sgc:active{background:var(--fg05);border-color:var(--fg12);color:var(--fg60)}
-.ctg{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
-.ct{font-size:9px;font-weight:300;padding:4px 10px;border-radius:14px;background:var(--fg03);border:1px solid var(--fg05);color:var(--fg40);cursor:pointer;transition:all .3s;font-family:var(--f)}
-.ct.off{opacity:.15;background:transparent;border-color:var(--fg03)}
+.sgc:active{background:var(--fg05);color:var(--fg60)}
 
-/* ==== EXPORT ==== */
-.ex{align-items:center;justify-content:center;padding:20px;background:var(--bg)}
-.ex__pv{width:100%;max-width:260px;aspect-ratio:9/16;border-radius:14px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.5);margin-bottom:16px;position:relative}
-.ex__pv canvas{width:100%;height:100%;display:block}
+/* Cue toggles */
+.cues{margin-top:5px;display:flex;flex-wrap:wrap;gap:4px}
+.cue{display:inline-flex;font-size:9px;font-weight:300;padding:4px 10px;border-radius:14px;background:var(--fg03);border:1px solid var(--fg05);color:var(--fg40);cursor:pointer;transition:all .3s;font-family:var(--f);white-space:nowrap}
+.cue.off{opacity:.2;background:transparent;border-color:var(--fg03)}
+
+/* Export overlay */
+.ex{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;z-index:100;opacity:0;pointer-events:none;transition:opacity .3s}
+.ex.on{opacity:1;pointer-events:auto}
+.ex__inv{font-weight:500;font-size:15px;letter-spacing:3px;text-transform:uppercase;color:var(--fg40);margin-bottom:18px;text-align:center;line-height:1.6}
+.ex__pv{width:100%;max-width:260px;aspect-ratio:9/16;border-radius:14px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.5);margin-bottom:16px}
+.ex__pv img{width:100%;height:100%;object-fit:contain;display:block}
 .ex__ac{display:flex;gap:8px;width:100%;max-width:260px}
-.ex__b{flex:1;padding:10px;border-radius:10px;border:none;font-family:var(--f);font-size:8px;font-weight:500;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .4s}
+.ex__b{flex:1;padding:10px;border-radius:10px;border:none;font-family:var(--f);font-size:8px;font-weight:500;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .3s}
 .ex__sv{background:var(--fg);color:var(--bg)}
 .ex__sv:active{opacity:.8;transform:scale(.98)}
 .ex__nw{background:var(--surf);color:var(--fg25);border:1px solid var(--fg03)}
 .ex__nw:active{background:var(--surf2)}
 .ex__st{margin-top:10px;font-size:8px;font-weight:300;letter-spacing:2px;color:var(--fg25);opacity:0;transition:opacity .6s}
 .ex__st.sh{opacity:1}
-.ex__inv{font-weight:500;font-size:15px;letter-spacing:3px;text-transform:uppercase;color:var(--fg40);margin-bottom:18px;text-align:center;line-height:1.6}
-.ex__ft{position:absolute;bottom:max(env(safe-area-inset-bottom,20px),20px);font-size:8px;font-weight:500;letter-spacing:6px;color:var(--fg05)}
 
-@media(min-width:431px){.pv{max-width:230px}.up__zone{max-width:230px}}
+/* Help section */
+.help{margin:24px 20px 40px;background:var(--surf);border:1px solid var(--fg05);border-radius:12px;padding:14px 16px}
+.help__toggle{background:none;border:none;font-family:var(--f);font-size:9px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--fg25);cursor:pointer;padding:0;display:flex;align-items:center;gap:8px;width:100%}
+.help__toggle:active{color:var(--fg40)}
+.help__arrow{transition:transform .3s;font-size:11px}
+.help__body{display:none;margin-top:14px;font-size:12px;font-weight:300;color:var(--fg40);line-height:1.8}
+.help__body.sh{display:block}
+.help__body p{margin-bottom:10px}
+.help__body strong{font-weight:500;color:var(--fg60)}
+
+@media(min-width:431px){.pv{max-width:180px}}
 </style>
 </head>
 <body>
 <div id="app">
-
-  <!-- UPLOAD -->
-  <div class="scr up on" id="s-up">
-    <div class="up__zone" id="upZ">
-      <div class="up__ic"><svg viewBox="0 0 18 18"><line x1="9" y1="3" x2="9" y2="15"/><line x1="3" y1="9" x2="15" y2="9"/></svg></div>
-      <div class="up__lb">Add Photo or Video</div>
-      <div class="up__hn">Camera or Library</div>
-    </div>
-    <div class="up__ft">VOLTR.</div>
-    <input type="file" id="fIn" accept="image/*,video/*">
+  <div class="hd">
+    <div class="hd__logo">VOLTR.</div>
+    <button class="hd__ex" id="bExport">EXPORT</button>
   </div>
-
-  <!-- CUSTOMIZE -->
-  <div class="scr cu" id="s-cu">
-    <div class="cu__hd">
-      <button class="cu__bk" id="bBack">&larr;</button>
-      <div class="cu__md" id="modeLb">SESSION</div>
-      <button class="cu__ex" id="bExport">Export</button>
-    </div>
-    <div class="cu__sc">
-      <div class="cu__pv">
-        <div class="pv" id="pv">
-          <img class="pv__m" id="pvI" style="display:none">
-          <video class="pv__m" id="pvV" muted loop playsinline webkit-playsinline style="display:none"></video>
-          <input type="range" class="pv__scr" id="pvScr" min="0" max="1000" value="0">
-          <canvas class="pv__sig" id="sigCv"></canvas>
-          <div class="pv__ct">
-            <div class="pv__nm" id="pvN">Today's Session</div>
-            <div class="pv__du" id="pvD" style="display:none"></div>
-            <div class="pv__cu" id="pvC" style="display:none"></div>
-            <div class="pv__mt" id="pvMt" style="display:none"></div>
-            <div class="pv__wk" id="pvW" style="display:none"></div>
-            <div class="pv__mk">VOLTR.</div>
-          </div>
+  <div class="main">
+    <div class="pv-wrap">
+      <div class="pv" id="pv">
+        <div class="pv__ct">
+          <div class="pv__nm" id="pvN">Session Name</div>
+          <div class="pv__cu" id="pvC"></div>
+          <div class="pv__info" id="pvInfo"></div>
+          <div class="pv__mk">VOLTR.</div>
         </div>
       </div>
-      <div class="vtab">
-        <button class="vt on" data-v="full">Full Card</button>
-        <button class="vt" data-v="mini">Mini</button>
-        <button class="vt" data-v="sticker">Sticker</button>
+    </div>
+    <div class="fields">
+      <!-- Session Name -->
+      <div class="field">
+        <div class="field__row"><div class="field__label">Session / Exercise Name</div></div>
+        <input class="field__input" id="iN" type="text" placeholder="e.g. Reverse Lunge" autocomplete="off" spellcheck="false">
+        <div class="sg" id="sg"></div>
       </div>
-      <div class="cu__ct">
-        <div class="cg"><div class="cl" id="nmLb">Session Name</div><input class="ci" id="iN" type="text" placeholder="e.g. Lower Body - Posterior" autocomplete="off" spellcheck="false"><div class="sg" id="sg"></div></div>
-        <div class="cr">
-          <div class="cg"><div class="cl" id="durLb">Duration</div><input class="ci ci--s" id="iD" type="text" placeholder="e.g. 58 min"></div>
-          <div class="cg"><div class="cl" id="mtLb">Detail</div><input class="ci ci--s" id="iM" type="text" placeholder="e.g. Week 4 · 3×8 · RPE 8"></div>
+      <!-- Duration + Detail -->
+      <div class="field__pair">
+        <div class="field">
+          <div class="field__row"><div class="field__label">Duration</div><button class="field__tog on" id="tDur"></button></div>
+          <input class="field__input field__input--s" id="iD" type="text" placeholder="e.g. 58 min">
         </div>
-        <!-- Endurance fields — hidden by default, shown for running/cycling -->
-        <div class="cr" id="endR" style="display:none">
-          <div class="cg"><div class="cl">Distance</div><input class="ci ci--s" id="iDist" type="text" placeholder="e.g. 8.2 km"></div>
-          <div class="cg"><div class="cl" id="paceLb">Pace</div><input class="ci ci--s" id="iPace" type="text" placeholder="e.g. 5:12 /km"></div>
+        <div class="field">
+          <div class="field__row"><div class="field__label">Detail</div><button class="field__tog on" id="tDet"></button></div>
+          <input class="field__input field__input--s" id="iM" type="text" placeholder="e.g. Week 4 · 3x8">
         </div>
-        <!-- Cue toggles — shown for ALL non-endurance inputs -->
-        <div class="cg" id="cBox" style="display:none"><div class="cl">Coaching Cues</div><div class="ctg" id="cTg"></div></div>
+      </div>
+      <!-- Endurance fields -->
+      <div class="field__pair" id="endR" style="display:none">
+        <div class="field">
+          <div class="field__row"><div class="field__label">Distance</div><button class="field__tog on" id="tDist"></button></div>
+          <input class="field__input field__input--s" id="iDist" type="text" placeholder="e.g. 8.2 km">
+        </div>
+        <div class="field">
+          <div class="field__row"><div class="field__label" id="paceLb">Pace</div><button class="field__tog on" id="tPace"></button></div>
+          <input class="field__input field__input--s" id="iPace" type="text" placeholder="e.g. 5:12 /km">
+        </div>
+      </div>
+      <!-- Size slider -->
+      <div class="field">
+        <div class="field__row"><div class="field__label">Sticker Size</div><span class="field__label" id="sizeLb" style="text-align:right">100%</span></div>
+        <input type="range" class="field__slider" id="iSize" min="60" max="120" value="100" step="5">
+      </div>
+      <!-- Coaching Cues -->
+      <div class="field" id="cBox">
+        <div class="field__row"><div class="field__label">Coaching Cues</div><button class="field__tog on" id="tCues"></button></div>
+        <div class="cues" id="cTg"></div>
+      </div>
+    </div>
+    <div class="help">
+      <button class="help__toggle" id="helpTog"><span class="help__arrow" id="helpArr">▸</span> How to use</button>
+      <div class="help__body" id="helpBody">
+        <p><strong>1.</strong> Type your exercise or session name. Coaching cues load automatically.</p>
+        <p><strong>2.</strong> Fill in Duration, Detail, or other fields as needed.</p>
+        <p><strong>3.</strong> Use the toggles to show or hide each data point on the sticker.</p>
+        <p><strong>4.</strong> Tap individual cues to turn them on or off.</p>
+        <p><strong>5.</strong> Hit Export, then Save. On iPhone this opens the share sheet — save to your camera roll.</p>
+        <p><strong>6.</strong> In Instagram Stories: add your gym photo or video, then place the sticker on top from your camera roll.</p>
+        <p>Running or cycling keywords (e.g. "Easy Run") automatically show Distance and Pace fields.</p>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- EXPORT -->
-  <div class="scr ex" id="s-ex">
-    <div class="ex__inv" id="exInv">Your session. Your story.</div>
-    <div class="ex__pv" id="exPv"></div>
-    <div class="ex__ac">
-      <button class="ex__b ex__nw" id="bNew">New</button>
-      <button class="ex__b ex__sv" id="bSave">Save</button>
-    </div>
-    <div class="ex__st" id="exSt">Saved</div>
-    <div class="ex__ft">VOLTR.</div>
+<!-- Export overlay -->
+<div class="ex" id="exScr">
+  <div class="ex__inv">Your session. Your story.</div>
+  <div class="ex__pv" id="exPv"></div>
+  <div class="ex__ac">
+    <button class="ex__b ex__nw" id="bNew">Back</button>
+    <button class="ex__b ex__sv" id="bSave">Save</button>
   </div>
+  <div class="ex__st" id="exSt">Saved</div>
 </div>
 
 <script>
 /* ================================================
-   VOLTR SHARE V5.0
-   Black & White. Form over Color.
-
-   ARCHITECTURE:
-   - TWO PARALLEL SYSTEMS that never break each other:
-     1. EXERCISE CUES: show for ALL non-endurance input
-        (photo AND video — always, with fallback)
-     2. ENDURANCE METRICS: show for running/cycling keywords
-        (distance, pace, duration — replaces cues)
-   - Mode is determined by INPUT, not file type
-   - File type only affects: video scrubber, media display
+   VOLTR STICKER TOOL
+   Transparent PNG stickers for IG Stories.
+   WHOOP-style: enter data, toggle what to show.
    ================================================ */
 
-// ---- CUE DATABASE (130+ exercises) ----
+// ---- CUE DATABASE ----
 const CUES={
-// ---- SQUAT PATTERNS ----
 'squat':['sit back and down','knees track toes','drive through midfoot'],'back squat':['sit back and down','knees track toes','drive through midfoot'],'front squat':['elbows high throughout','find depth then drive','chest over knees'],'goblet squat':['sit between your heels','weight anchors you','stand through it'],'bulgarian split squat':['sink into the stretch','front knee stacked','drive the floor away'],'split squat':['load the front leg','long slow descent','press up with intent'],'pause squat':['hold the bottom','stay tight below','stand when ready'],'box squat':['reach back for it','settle then explode','hips knees together'],
-// ---- HINGE PATTERNS ----
 'deadlift':['pull the slack out','push floor away','finish with hips'],'conventional deadlift':['pull the slack out','push floor away','finish with hips'],'sumo deadlift':['spread the floor','hips bar rise together','patient off the floor'],'romanian deadlift':['hinge before you pull','bar stays close','feel the hamstrings load'],'rdl':['hinge before you pull','bar stays close','feel the hamstrings load'],'stiff leg deadlift':['soft knees then hinge','hamstrings load up','reverse the path'],'trap bar deadlift':['sit back and grip','drive through the floor','stand tall at top'],'single leg rdl':['reach back with purpose','hip does the work','same way back'],
-// ---- GLUTES & HIPS ----
 'hip thrust':['hold the lockout','squeeze at the top','slow on the way down'],'barbell hip thrust':['plant feet and drive','full extension each rep','pause at the top'],'glute bridge':['press through heels','hold squeeze at top','lower with control'],'lunge':['tall torso throughout','step with intention','push through front foot'],'walking lunge':['long stride own it','knee tracks toes','drive the ground away'],'reverse lunge':['reach back controlled','load the front leg','stand through cleanly'],'step up':['work through top foot','stand fully first','control the descent'],
-// ---- LEGS ----
 'leg press':['use the full range','no bounce at bottom','stop before lockout'],'hack squat':['back flat on pad','deep and deliberate','press evenly through feet'],'leg extension':['squeeze at the top','slow on the way down','feel every degree'],'leg curl':['heels toward you','hold peak contraction','resist the return'],'hamstring curl':['heels to glutes','hold the top','fight the eccentric'],'nordic curl':['slow as possible down','catch yourself honestly','build range over time'],'calf raise':['full stretch below','hold the top','three seconds down'],
-// ---- PRESSING ----
 'bench press':['set the shoulder blades','control the descent','press through the chest'],'flat bench':['set the shoulder blades','control the descent','press through the chest'],'incline bench':['plant feet slight arch','elbows at forty-five','press toward ceiling'],'incline bench press':['plant feet slight arch','elbows at forty-five','press toward ceiling'],'close grip bench':['elbows tight to ribs','feel the triceps load','lockout with purpose'],'dumbbell bench press':['deep stretch at bottom','press up and in','match speed both sides'],'dumbbell press':['deep stretch at bottom','press up and in','match speed both sides'],'incline dumbbell press':['open chest at bottom','drive toward ceiling','squeeze at the top'],
-// ---- OVERHEAD ----
 'overhead press':['brace before you press','straight line up','ears show at top'],'military press':['no leg drive','lock it out overhead','same path down'],'dumbbell shoulder press':['elbows under wrists','press and squeeze','lower with control'],'push up':['body one straight line','chest to the floor','elbows back not out'],'dip':['lean slightly forward','deep stretch below','lock out strong'],
-// ---- PULLING ----
 'barbell row':['pull to lower ribs','squeeze your back','lower with control'],'bent over row':['flat back stay there','pull to hip crease','hold the contraction'],'pendlay row':['dead stop each rep','pull fast with elbows','settle between reps'],'dumbbell row':['full stretch below','pull past your hip','resist on the way down'],'cable row':['sit tall pull back','pinch shoulder blades','release with control'],'seated cable row':['pull to sternum','hold for a beat','let the stretch happen'],'t-bar row':['chest on pad pull','squeeze at the top','lower with intention'],
-// ---- VERTICAL PULL ----
 'pull up':['dead hang then go','lead with your chest','slow on the way down'],'chin up':['start from full hang','chin clears the bar','three seconds down'],'lat pulldown':['slight lean pull down','feel your lats work','let it stretch back'],
-// ---- DELTS & ISOLATION ----
 'lateral raise':['lead with elbows','pause at the top','slow on the way down'],'dumbbell lateral raise':['lead with elbows','pause at the top','slow on the way down'],'cable lateral raise':['constant tension throughout','smooth arc up','resist the pull back'],'front raise':['stop at shoulder height','no swinging','lower twice as slow'],'rear delt fly':['elbows wide not hands','squeeze the rear delts','light and precise'],'face pull':['pull apart at end','external rotate fully','pause at full range'],'shrug':['straight up not rolling','hold the top','lower all the way'],
-// ---- BICEPS ----
 'bicep curl':['elbows stay pinned','squeeze at the top','slow on the way down'],'dumbbell curl':['elbows stay pinned','squeeze at the top','slow on the way down'],'barbell curl':['elbows at your sides','no body english','control every inch down'],'hammer curl':['thumbs up throughout','squeeze at the top','same speed down'],'preacher curl':['let it stretch fully','curl with the bicep','slow at the bottom'],'concentration curl':['elbow locked on thigh','isolate and squeeze','three seconds down'],'cable curl':['constant tension throughout','pause at peak','resist the cable back'],
-// ---- TRICEPS ----
 'tricep pushdown':['elbows glued to sides','lock out at bottom','resist the pull back'],'rope pushdown':['split the rope below','squeeze triceps hard','slow on the return'],'overhead tricep extension':['deep stretch behind head','press to full lockout','elbows stay forward'],'skull crusher':['elbows over shoulders','lower to forehead','press back to start'],
-// ---- CHEST FLY & ISOLATION ----
 'chest fly':['drive through the chest','tension in the stretch','soft bend in elbows'],'dumbbell fly':['drive through the chest','tension in the stretch','soft bend in elbows'],'cable fly':['constant tension throughout','squeeze chest at center','open up with control'],'cable crossover':['slight lean and cross','squeeze in the middle','open chest on return'],'pec deck':['full stretch full squeeze','back stays on pad','same speed both ways'],
-// ---- CORE ----
 'plank':['brace the whole time','breathe behind brace','hold your position'],'crunch':['ribs toward hips','exhale at the top','no neck pulling'],'hanging leg raise':['start from dead hang','lift with your abs','lower without swinging'],'leg raise':['lower back stays down','lift with control','lower just above floor'],'ab rollout':['brace before extending','only go as far','pull back with abs'],'russian twist':['rotate from ribcage','feet off the floor','control both directions'],'pallof press':['resist the rotation','press out and hold','breathe behind tension'],'dead bug':['lower back glued down','opposite arm and leg','slow and deliberate'],
-// ---- RUNNING ----
 'tempo run':['settle into pace early','relax the shoulders','breathe with rhythm'],'easy run':['keep it conversational','stay loose up top','enjoy the movement'],'long run':['start slower than planned','stay fueled and present','save something for later'],'interval':['commit to the effort','recover between reps','hold form throughout'],'intervals':['commit to the effort','recover between reps','hold form throughout'],'sprint':['drive the arms hard','stay tall through hips','full recovery between'],'hill run':['shorten stride uphill','pump your arms','stay relaxed above'],'recovery run':['slower than you think','let body move freely','no pressure today'],'fartlek':['play with the pace','listen to your body','keep it fun'],'run':['relax the shoulders','breathe with rhythm','hold your pace'],'running':['relax the shoulders','breathe with rhythm','hold your pace'],'5k':['hold back early','build through the middle','empty the tank late'],'10k':['patient first half','settle into rhythm','push the last two'],
-// ---- CONDITIONING ----
 'rowing':['legs lean then pull','smooth is fast','match recovery to drive'],'assault bike':['steady cadence','breathe with rhythm','sit heavy in seat'],'ski erg':['hinge and pull together','snap your hips','arms follow through'],'jump rope':['balls of your feet','wrists do the work','find rhythm hold it'],'kettlebell swing':['hinge hard and snap','let it float','guide it back through'],'kb swing':['hinge hard and snap','let it float','guide it back through'],'box jump':['load and explode','land soft knees bent','step down every time'],'thruster':['catch deep and drive','floor to ceiling','one clean movement'],
-// ---- SESSION TYPES ----
 'upper body push':['press with intent','set up each rep','match tempo to load'],'upper body pull':['full stretch full squeeze','lead with your elbows','resist every lowering'],'upper body':['balance push and pull','honest with the weight','finish what you start'],'lower body':['use the full range','rooted through your feet','control every rep'],'lower body posterior':['hinge deep feel it','bar path stays tight','load the hamstrings'],'lower body anterior':['sit into full depth','drive through whole foot','stand with authority'],'push day':['set up before pressing','press with purpose','lock out each rep'],'pull day':['full stretch first','squeeze at the peak','fight the way down'],'leg day':['honest depth each rep','drive through your feet','finish every set'],'full body':['big movements first','manage your energy','finish what you start'],
-// ---- MUSCLE GROUPS ----
 'arms':['feel every rep','no momentum allowed','twice as slow down'],'delts arms abs':['precision over weight','isolate the target','stay with the muscle'],'delts':['lead with your elbows','no swinging','control every inch'],'shoulders':['lead with your elbows','no swinging','control every inch'],'chest':['deep stretch then drive','squeeze the chest','match tempo both ways'],'chest and triceps':['press through chest first','lock out with triceps','control every rep'],'back':['pull to the muscle','hold the contraction','fight the negative'],'back and biceps':['stretch and squeeze','elbows drive the pull','slow on the way back'],'glutes':['squeeze at the top','hold the peak','feel it loading'],'glute focus':['squeeze at the top','hold the peak','feel it loading'],
-// ---- TRAINING STYLES ----
 'hybrid conditioning':['manage the transitions','strength first then push','breathe between efforts'],'hybrid':['strength then endurance','pace yourself honestly','both systems working'],'conditioning':['settle into effort','breathe behind the work','stay composed throughout'],'mobility':['breathe into position','further than yesterday','no forcing just finding'],'recovery':['move gently with purpose','let body guide you','less is more today'],'deload':['lighter not lazy','perfect your positions','recover with intention'],'core':['brace before you move','breathe behind tension','hold your position'],'abs':['brace before you move','breathe behind tension','hold your position'],
 };
 const FALLBACK=['controlled tempo','clean positions','stay present'];
 
-// ---- ENDURANCE KEYWORDS ----
 const RUN_KEYS=['run','running','jog','jogging','tempo run','easy run','long run','interval','intervals','sprint','hill run','recovery run','fartlek','5k','10k','half marathon','marathon','conditioning run','endurance run','endurance'];
 const CYCLE_KEYS=['cycling','bike','ride','indoor cycling','outdoor ride','zwift','indoor ride'];
 
 // ---- STATE ----
-// contentMode: 'exercise' | 'running' | 'cycling'
-// exercise = cues visible. running/cycling = endurance metrics visible.
 const S={
-  contentMode:'exercise',
-  variant:'full',
-  name:'',dur:'',week:'',dist:'',pace:'',
-  cues:[],cueOn:[true,true,true],
-  url:null,fileType:null,imgO:null
+  name:'',dur:'',detail:'',dist:'',pace:'',
+  cues:FALLBACK,cueOn:[true,true,true],
+  show:{dur:true,detail:true,cues:true,dist:true,pace:true},
+  mode:'exercise', // exercise | running | cycling
+  scale:1
 };
 
 const $=id=>document.getElementById(id);
-const scrs={up:$('s-up'),cu:$('s-cu'),ex:$('s-ex')};
-const pv=$('pv'),pvI=$('pvI'),pvV=$('pvV'),pvScr=$('pvScr');
-const pvN=$('pvN'),pvD=$('pvD'),pvC=$('pvC'),pvW=$('pvW'),pvMt=$('pvMt');
-const iN=$('iN'),iD=$('iD'),iM=$('iM'),iDist=$('iDist'),iPace=$('iPace');
-const sgEl=$('sg'),cBox=$('cBox'),cTg=$('cTg'),endR=$('endR');
-const sigCv=$('sigCv');
 
-/* ================================================
-   SIGNATURE VISUAL SYSTEM
-   B&W Formensprache. No color. Only form.
-   Segmented lines, corner systems, motion trails,
-   grid fragments, directional geometry, velocity arcs,
-   data tracks, pulse rings.
-   ================================================ */
-
-function drawSignature(ctx,W,H,variant,t){
-  const isFull=variant==='full';
-  const isMini=variant==='mini';
-  const isStk=variant==='sticker';
-
-  // ---- GRADIENTS (photo/video modes) ----
-  if(isFull||isMini){
-    const g=ctx.createLinearGradient(0,isMini?H*.65:H*.5,0,H);
-    g.addColorStop(0,'rgba(0,0,0,0)');
-    g.addColorStop(.3,'rgba(0,0,0,.25)');
-    g.addColorStop(.6,'rgba(0,0,0,.55)');
-    g.addColorStop(1,'rgba(0,0,0,.92)');
-    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  }
-
-  ctx.save();ctx.lineCap='round';
-
-  /* ================================================
-     1. CORNER SYSTEM — editorial crop marks
-     Positioned in safe zones away from content.
-     Full: content lives H*.45–H*.78, so corners at top + bottom edges.
-     ================================================ */
-  if(!isMini){
-    const cLen=W*.07;const cAlpha=isStk?.05:.07;
-    ctx.strokeStyle=`rgba(255,255,255,${cAlpha})`;ctx.lineWidth=.75;
-
-    // Top-right corner
-    const trx=W*.9,try_=H*.04;
-    ctx.beginPath();ctx.moveTo(trx,try_);ctx.lineTo(trx+cLen,try_);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(trx+cLen,try_);ctx.lineTo(trx+cLen,try_+cLen);ctx.stroke();
-
-    // Bottom-right corner — safely below content
-    const brx=W*.9,bry=H*.95;
-    ctx.beginPath();ctx.moveTo(brx+cLen,bry);ctx.lineTo(brx+cLen,bry+cLen*.5);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(brx,bry);ctx.lineTo(brx+cLen,bry);ctx.stroke();
-
-    // Top-left corner — whisper
-    if(isFull){
-      const tlLen=cLen*.5;const tlx=W*.04,tly=H*.04;
-      ctx.strokeStyle='rgba(255,255,255,.05)';
-      ctx.beginPath();ctx.moveTo(tlx+tlLen,tly);ctx.lineTo(tlx,tly);ctx.lineTo(tlx,tly+tlLen);ctx.stroke();
-    }
-  }
-
-  /* ================================================
-     2. SEGMENTED LINES — layered horizontal system
-     Primary + secondary + tertiary for depth.
-     ================================================ */
-  if(isFull||isStk){
-    const slx=isStk?W*.52:W*.58;
-    const sly=isStk?H*.1:H*.085;
-    const totalW=W*.36;
-    const segs=7;const gap=totalW*.05;
-    const segW=(totalW-gap*(segs-1))/segs;
-    const alphas=[.02,.04,.06,.08,.06,.04,.02];
-
-    for(let i=0;i<segs;i++){
-      const sx=slx+i*(segW+gap);
-      const a=alphas[i]+Math.sin(t*.3+i*.5)*.01;
-      ctx.fillStyle=`rgba(255,255,255,${a})`;
-      ctx.fillRect(sx,sly,segW,isFull?2:1.5);
-    }
-    // Secondary — barely there
-    const sl2y=sly+(isFull?12:8);
-    for(let i=2;i<segs-2;i++){
-      const sx=slx+totalW*.1+i*(segW*1.1);
-      ctx.fillStyle=`rgba(255,255,255,${alphas[i]*.3})`;
-      ctx.fillRect(sx,sl2y,segW*.6,1);
-    }
-  }
-
-  /* ================================================
-     3. SOFT CIRCLES — layered transparency rings
-     Concentric, very subtle. Performance gauge feeling.
-     ================================================ */
-  if(isFull){
-    const cx=W*.88,cy=H*.14;
-    ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=.75;
-    ctx.beginPath();ctx.arc(cx,cy,W*.04,0,Math.PI*2);ctx.stroke();
-    ctx.strokeStyle='rgba(255,255,255,.03)';
-    ctx.beginPath();ctx.arc(cx,cy,W*.025,0,Math.PI*2);ctx.stroke();
-    ctx.fillStyle='rgba(255,255,255,.06)';
-    ctx.beginPath();ctx.arc(cx,cy,1.5,0,Math.PI*2);ctx.fill();
-  }
-
-  /* ================================================
-     4. SEGMENTED ARC — partial circle with gaps
-     Performance gauge / movement arc.
-     ================================================ */
-  if(isFull){
-    const ax=W*.1,ay=H*.16;const ar=W*.03;
-    const segments=4;const gapA=Math.PI*.07;
-    const totalArc=Math.PI;const segArc=(totalArc-gapA*(segments-1))/segments;
-    const startA=-Math.PI*.7;
-    for(let i=0;i<segments;i++){
-      const sa=startA+i*(segArc+gapA);
-      ctx.strokeStyle=`rgba(255,255,255,${.03+.02*Math.sin(i*1.2)})`;ctx.lineWidth=.75;
-      ctx.beginPath();ctx.arc(ax,ay,ar,sa,sa+segArc);ctx.stroke();
-    }
-    const endA=startA+totalArc;
-    ctx.fillStyle='rgba(255,255,255,.06)';
-    ctx.beginPath();ctx.arc(ax+Math.cos(endA)*ar,ay+Math.sin(endA)*ar,1.5,0,Math.PI*2);ctx.fill();
-  }
-
-  /* ================================================
-     5. DASHED MICRO-LINES — directional movement
-     Short, evenly spaced, diagonal or horizontal.
-     ================================================ */
-  if(isFull){
-    // Diagonal dashes — upper-right, barely visible
-    const dlx=W*.82,dly=H*.28;
-    const angle=18*Math.PI/180;const dashLen=W*.02;const count=4;const spacing=10;
-    for(let i=0;i<count;i++){
-      const ox=i*spacing*Math.cos(angle+Math.PI/2);
-      const oy=i*spacing*Math.sin(angle+Math.PI/2);
-      ctx.strokeStyle=`rgba(255,255,255,${.03+.015*Math.sin(t*.2+i*.7)})`;ctx.lineWidth=.75;
-      ctx.beginPath();
-      ctx.moveTo(dlx+ox,dly+oy);
-      ctx.lineTo(dlx+ox+dashLen*Math.cos(angle),dly+oy+dashLen*Math.sin(angle));
-      ctx.stroke();
-    }
-
-    // Horizontal micro-dashes — upper left
-    const hdx=W*.05,hdy=H*.26;
-    for(let i=0;i<3;i++){
-      ctx.fillStyle=`rgba(255,255,255,${.03+.01*i})`;
-      ctx.fillRect(hdx+i*12,hdy,6,1);
-    }
-  }
-
-  /* ================================================
-     6. DIRECTIONAL CHEVRONS — movement direction
-     Paired chevrons, subtle forward motion.
-     ================================================ */
-  if(isFull){
-    const chx=W*.05,chy=H*.11;const chS=W*.018;
-    ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=.75;
-    ctx.beginPath();
-    ctx.moveTo(chx,chy-chS);ctx.lineTo(chx+chS*.7,chy);ctx.lineTo(chx,chy+chS);
-    ctx.stroke();
-    ctx.strokeStyle='rgba(255,255,255,.03)';
-    ctx.beginPath();
-    ctx.moveTo(chx+chS*.55,chy-chS*.7);ctx.lineTo(chx+chS*1.1,chy);ctx.lineTo(chx+chS*.55,chy+chS*.7);
-    ctx.stroke();
-  }
-
-  /* ================================================
-     7. PERFORMANCE GRID — sparse dot matrix
-     Editorial measurement feeling. Not tech dashboard.
-     ================================================ */
-  if(isFull){
-    const gx=W*.8,gy=H*.22;
-    const cols=5;const rows=5;const sp=9;
-    for(let r=0;r<rows;r++){
-      for(let c=0;c<cols;c++){
-        if((r+c)%2===0&&(r*c)%3!==0)continue;
-        const da=.02+.015*Math.sin(r*1.3+c*.8+t*.1);
-        ctx.fillStyle=`rgba(255,255,255,${da})`;
-        ctx.fillRect(gx+c*sp,gy+r*sp,1,1);
-      }
-    }
-  }
-
-  if(isStk){
-    const gx=W*.72,gy=H*.7;
-    const cols=4;const rows=5;const sp=8;
-    for(let r=0;r<rows;r++){
-      for(let c=0;c<cols;c++){
-        if((r+c)%2===0)continue;
-        ctx.fillStyle=`rgba(255,255,255,${.015+.005*Math.sin(r+c)})`;
-        ctx.fillRect(gx+c*sp,gy+r*sp,1,1);
-      }
-    }
-  }
-
-  /* ================================================
-     8. DATA TRACK — horizontal measurement line
-     Tick marks at intervals. Like a ruler fragment.
-     ================================================ */
-  if(isFull){
-    const dy=H*.072;const dx=W*.06;const dw=W*.28;
-    ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=.75;
-    ctx.beginPath();ctx.moveTo(dx,dy);ctx.lineTo(dx+dw,dy);ctx.stroke();
-    const ticks=8;
-    for(let i=0;i<=ticks;i++){
-      const tx=dx+i*(dw/ticks);
-      const th=(i%3===0)?5:2.5;
-      ctx.strokeStyle=`rgba(255,255,255,${i%3===0?.06:.03})`;ctx.lineWidth=.75;
-      ctx.beginPath();ctx.moveTo(tx,dy-th);ctx.lineTo(tx,dy+th);ctx.stroke();
-    }
-  }
-
-  /* ================================================
-     9. THIN FRAME — partial editorial border
-     Sticker only: two edges (top + right).
-     ================================================ */
-  if(isStk){
-    const inset=W*.05;
-    ctx.strokeStyle='rgba(255,255,255,.03)';ctx.lineWidth=.75;
-    ctx.beginPath();
-    ctx.moveTo(inset,inset);ctx.lineTo(W-inset,inset);ctx.lineTo(W-inset,H-inset);
-    ctx.stroke();
-    // Bottom-right crosshair
-    const crx=W-inset,cry=H-inset;
-    ctx.strokeStyle='rgba(255,255,255,.025)';ctx.lineWidth=.75;
-    ctx.beginPath();ctx.moveTo(crx-6,cry);ctx.lineTo(crx+6,cry);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(crx,cry-6);ctx.lineTo(crx,cry+6);ctx.stroke();
-  }
-
-  /* ================================================
-     10. CROSSHAIR MARK — registration mark style
-     Small + symbol at a strategic position.
-     ================================================ */
-  if(isFull){
-    const cx=W*.93,cy=H*.5;const s=5;
-    ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=.75;
-    ctx.beginPath();ctx.moveTo(cx-s,cy);ctx.lineTo(cx+s,cy);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(cx,cy-s);ctx.lineTo(cx,cy+s);ctx.stroke();
-    // Tiny circle around it
-    ctx.strokeStyle='rgba(255,255,255,.03)';
-    ctx.beginPath();ctx.arc(cx,cy,s*1.8,0,Math.PI*2);ctx.stroke();
-  }
-
-  /* ================================================
-     11. MOTION TRAIL — angled parallel lines
-     Velocity / movement feeling. Right side.
-     ================================================ */
-  if(isFull){
-    const mtx=W*.72,mty=H*.34;
-    const count=5;const spacing=10;const len=W*.08;
-    const angle=20*Math.PI/180;
-    for(let i=0;i<count;i++){
-      const ox=i*spacing*Math.cos(angle+Math.PI/2);
-      const oy=i*spacing*Math.sin(angle+Math.PI/2);
-      const alpha=.025+.015*Math.sin(t*.2+i*.7);
-      ctx.strokeStyle=`rgba(255,255,255,${alpha})`;ctx.lineWidth=.75;
-      ctx.beginPath();
-      ctx.moveTo(mtx+ox,mty+oy);
-      ctx.lineTo(mtx+ox+len*Math.cos(angle),mty+oy+len*Math.sin(angle));
-      ctx.stroke();
-    }
-  }
-
-  /* ================================================
-     12. WHISPER LINE — single horizontal breath
-     Very long, very faint. Creates spatial depth.
-     ================================================ */
-  if(isFull){
-    ctx.strokeStyle='rgba(255,255,255,.03)';ctx.lineWidth=.75;
-    ctx.beginPath();ctx.moveTo(W*.04,H*.42);ctx.lineTo(W*.3,H*.42);ctx.stroke();
-  }
-  if(isStk){
-    ctx.strokeStyle='rgba(255,255,255,.02)';ctx.lineWidth=.75;
-    ctx.beginPath();ctx.moveTo(W*.1,H*.62);ctx.lineTo(W*.4,H*.62);ctx.stroke();
-  }
-
-  /* ================================================
-     13. MINI ELEMENTS — restrained but present
-     Corner mark + micro-line + dot.
-     ================================================ */
-  if(isMini){
-    // Top-right corner mark
-    const mx=W*.91,my=H*.055;
-    ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=.75;
-    ctx.beginPath();ctx.moveTo(mx-W*.035,my);ctx.lineTo(mx,my);ctx.lineTo(mx,my+W*.035);ctx.stroke();
-
-    // Bottom micro-line
-    const sx=W*.72,sy=H*.82;
-    ctx.fillStyle='rgba(255,255,255,.03)';
-    ctx.fillRect(sx,sy,W*.08,1);
-    ctx.fillStyle='rgba(255,255,255,.02)';
-    ctx.fillRect(sx+W*.02,sy+5,W*.04,1);
-
-    // Soft dot — bottom left
-    ctx.fillStyle='rgba(255,255,255,.03)';
-    ctx.beginPath();ctx.arc(W*.08,H*.92,1.5,0,Math.PI*2);ctx.fill();
-  }
-
-  /* ================================================
-     14. GRAIN — subtle film texture
-     ================================================ */
-  if(!isMini&&!isStk){
-    const d=W*H*.00015;
-    for(let i=0;i<d;i++){
-      ctx.fillStyle=`rgba(255,255,255,${Math.random()*.012})`;
-      ctx.fillRect(Math.random()*W,Math.random()*H,1,1);
-    }
-  }
-
-  ctx.restore();
+// ---- TOGGLE BUTTONS ----
+function initToggles(){
+  const map={tDur:'dur',tDet:'detail',tCues:'cues',tDist:'dist',tPace:'pace'};
+  Object.entries(map).forEach(([id,key])=>{
+    const btn=$(id);if(!btn)return;
+    btn.onclick=()=>{
+      S.show[key]=!S.show[key];
+      btn.classList.toggle('on',S.show[key]);
+      updatePreview();
+    };
+  });
 }
-
-// ---- ANIMATED PREVIEW ----
-let sigT=0;
-function resizeSig(){
-  const r=pv.getBoundingClientRect();
-  const dpr=window.devicePixelRatio||1;
-  sigCv.width=Math.round(r.width*dpr);
-  sigCv.height=Math.round(r.height*dpr);
-  sigCv.style.width=r.width+'px';
-  sigCv.style.height=r.height+'px';
-}
-function tickSig(){
-  sigT+=.02;
-  if(!sigCv.width||!sigCv.height)resizeSig();
-  const ctx=sigCv.getContext('2d');
-  ctx.clearRect(0,0,sigCv.width,sigCv.height);
-  drawSignature(ctx,sigCv.width,sigCv.height,S.variant,sigT);
-  requestAnimationFrame(tickSig);
-}
-requestAnimationFrame(tickSig);
-
-// ---- SCREEN NAV ----
-let cur='up';
-function go(n){
-  const p=scrs[cur],nx=scrs[n];if(p===nx)return;
-  p.classList.remove('on');p.classList.add('out');
-  void nx.offsetWidth;nx.classList.remove('out');nx.classList.add('on');
-  cur=n;setTimeout(()=>p.classList.remove('out'),450);
-}
-
-// ---- ENDURANCE DETECTION ----
-function detectEndurance(name){
-  const l=name.toLowerCase();
-  if(CYCLE_KEYS.some(k=>l.includes(k)))return 'cycling';
-  if(RUN_KEYS.some(k=>l.includes(k)))return 'running';
-  return null;
-}
-
-/* ================================================
-   CONTENT MODE SWITCHING
-
-   exercise: cues visible, endurance hidden
-   running:  endurance visible, cues hidden
-   cycling:  endurance visible, cues hidden
-   ================================================ */
-function setContentMode(mode){
-  S.contentMode=mode;
-  const isEnd=(mode==='running'||mode==='cycling');
-
-  // Header label
-  $('modeLb').textContent=isEnd?mode.toUpperCase():'EXERCISE';
-
-  // Input fields: endurance row
-  endR.style.display=isEnd?'flex':'none';
-  if(isEnd){
-    $('paceLb').textContent=(mode==='cycling')?'Avg Speed':'Pace';
-    iPace.placeholder=(mode==='cycling')?'e.g. 28 km/h':'e.g. 5:12 /km';
-    iDist.placeholder=(mode==='cycling')?'e.g. 42 km':'e.g. 8.2 km';
-  }
-
-  // Preview: both systems can coexist
-  if(isEnd){
-    // Endurance: show metrics + cues (cues loaded by processNameInput)
-    pvD.style.display='none';
-    pvMt.style.display='flex';
-    upEndMt();
-    // Cues stay visible (set by processNameInput)
-  }else{
-    // Exercise: cues + duration, no endurance metrics
-    pvMt.style.display='none';
-    pvD.style.display=S.dur?'':'none';
-  }
-  // Cues always managed by processNameInput, not here
-}
-
-// ---- FILE INPUT ----
-$('upZ').onclick=()=>$('fIn').click();
-$('fIn').onchange=function(e){
-  const f=e.target.files[0];if(!f)return;
-  const url=URL.createObjectURL(f);S.url=url;
-  const ext=(f.name||'').split('.').pop().toLowerCase();
-  const vidExts=['mp4','mov','m4v','webm','avi','mkv','3gp'];
-  const isVid=f.type.startsWith('video')||vidExts.includes(ext);
-
-  if(isVid){
-    S.fileType='video';
-    pvV.src=url;pvV.style.display='block';pvI.style.display='none';
-    pvScr.classList.add('sh');
-    pvV.onloadeddata=()=>{pvScr.max=Math.floor(pvV.duration*100)};
-    pvV.play().catch(()=>{});
-    iN.placeholder='e.g. Dumbbell Lateral Raise';
-    $('nmLb').textContent='Exercise Name';
-  }else{
-    S.fileType='image';
-    pvI.src=url;pvI.style.display='block';pvV.style.display='none';
-    pvScr.classList.remove('sh');S.imgO=new Image();S.imgO.src=url;
-    iN.placeholder='e.g. Lower Body - Posterior';
-    $('nmLb').textContent='Session Name';
-  }
-
-  // Start in exercise mode with fallback cues
-  S.cues=FALLBACK;S.cueOn=[true,true,true];
-  setContentMode('exercise');
-  rCTg();rPvC();
-
-  pv.classList.add('live');go('cu');resizeSig();
-  setTimeout(()=>iN.focus(),500);
-};
-
-pvScr.oninput=()=>{if(pvV.duration){pvV.pause();pvV.currentTime=pvScr.value/100}};
-pv.onclick=e=>{if(e.target===pvScr)return;if(S.fileType==='video'&&pvV.src){pvV.paused?pvV.play().catch(()=>{}):pvV.pause()}};
+initToggles();
 
 // ---- CUE MATCHING ----
 function findCues(q){
@@ -716,397 +254,133 @@ function findCues(q){
   return null;
 }
 
+// ---- ENDURANCE DETECTION ----
+function detectMode(name){
+  const l=name.toLowerCase();
+  if(CYCLE_KEYS.some(k=>l.includes(k)))return 'cycling';
+  if(RUN_KEYS.some(k=>l.includes(k)))return 'running';
+  return 'exercise';
+}
+
 // ---- SUGGESTIONS ----
 function upSg(q){
-  if(!q||q.length<2){sgEl.classList.remove('sh');return}
+  const sg=$('sg');
+  if(!q||q.length<2){sg.classList.remove('sh');return}
   const l=q.toLowerCase();
   const m=Object.keys(CUES).filter(k=>k.includes(l)||l.includes(k)).sort((a,b)=>a.length-b.length).slice(0,5);
-  if(!m.length){sgEl.classList.remove('sh');return}
-  sgEl.innerHTML=m.map(k=>`<button class="sgc" data-v="${k}">${k.split(' ').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ')}</button>`).join('');
-  sgEl.classList.add('sh');
+  if(!m.length){sg.classList.remove('sh');return}
+  sg.innerHTML=m.map(k=>`<button class="sgc" data-v="${k}">${k.split(' ').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ')}</button>`).join('');
+  sg.classList.add('sh');
 }
-sgEl.onclick=e=>{
+$('sg').onclick=e=>{
   const b=e.target.closest('.sgc');if(!b)return;
   const v=b.dataset.v;
   const lb=v.split(' ').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ');
-  iN.value=lb;S.name=lb;
-  sgEl.classList.remove('sh');
-  processNameInput();
+  $('iN').value=lb;S.name=lb;
+  $('sg').classList.remove('sh');
+  processName();
 };
 
-/* ================================================
-   NAME INPUT — THE CORE ROUTING LOGIC
-
-   This is where both systems connect:
-   1. Check if input matches endurance keywords → running/cycling mode
-   2. If NOT endurance → load cues (always, with fallback)
-   ================================================ */
-function processNameInput(){
-  pvN.textContent=S.name||"Today's Session";
-
-  // Step 1: Check for endurance
-  const endMode=detectEndurance(S.name);
-
-  if(endMode){
-    // ENDURANCE MODE — switch to running/cycling
-    if(S.contentMode!==endMode){
-      setContentMode(endMode);
-      iN.placeholder=endMode==='cycling'?'e.g. Sunday Ride':'e.g. Easy Run';
-      $('nmLb').textContent=endMode==='cycling'?'Ride Name':'Run Name';
-    }
-  }else{
-    // EXERCISE MODE — switch back if needed
-    if(S.contentMode!=='exercise'){
-      setContentMode('exercise');
-      iN.placeholder=S.fileType==='video'?'e.g. Dumbbell Lateral Raise':'e.g. Lower Body - Posterior';
-      $('nmLb').textContent=S.fileType==='video'?'Exercise Name':'Session Name';
+// ---- NAME INPUT ----
+function processName(){
+  const newMode=detectMode(S.name);
+  if(newMode!==S.mode){
+    S.mode=newMode;
+    const isEnd=S.mode==='running'||S.mode==='cycling';
+    $('endR').style.display=isEnd?'flex':'none';
+    if(isEnd){
+      $('paceLb').textContent=S.mode==='cycling'?'Avg Speed':'Pace';
+      $('iPace').placeholder=S.mode==='cycling'?'e.g. 28 km/h':'e.g. 5:12 /km';
+      $('iDist').placeholder=S.mode==='cycling'?'e.g. 42 km':'e.g. 8.2 km';
     }
   }
-
-  // ALWAYS load cues — exercise AND endurance modes both get them
   const c=findCues(S.name);
   S.cues=c||FALLBACK;
   S.cueOn=[true,true,true];
-  rCTg();rPvC();
-  cBox.style.display='block';
-  pvC.style.display='';
+  renderCues();
+  updatePreview();
 }
 
-iN.oninput=()=>{
-  S.name=iN.value;
-  upSg(iN.value);
-  processNameInput();
-};
+$('iN').oninput=()=>{S.name=$('iN').value;upSg($('iN').value);processName()};
+$('iD').oninput=()=>{S.dur=$('iD').value.trim();updatePreview()};
+$('iM').oninput=()=>{S.detail=$('iM').value.trim();updatePreview()};
+$('iDist').oninput=()=>{S.dist=$('iDist').value.trim();updatePreview()};
+$('iPace').oninput=()=>{S.pace=$('iPace').value.trim();updatePreview()};
+$('iSize').oninput=()=>{S.scale=+$('iSize').value/100;$('sizeLb').textContent=Math.round(S.scale*100)+'%';updatePreview()};
 
-iD.oninput=()=>{
-  S.dur=iD.value.trim();
-  if(S.contentMode==='running'||S.contentMode==='cycling'){
-    pvD.style.display='none';
-    upEndMt();
-  }else if(S.dur){
-    pvD.textContent=S.dur.match(/\d+\s*(min|h|:)/i)?S.dur.toUpperCase():S.dur+' MIN';
-    pvD.style.display='';
-  }else{
-    pvD.textContent='';pvD.style.display='none';
+// ---- CUE TOGGLES ----
+function renderCues(){
+  const tg=$('cTg');
+  tg.innerHTML=S.cues.map((c,i)=>`<button class="cue${S.cueOn[i]?'':' off'}" data-i="${i}">${c}</button>`).join('');
+}
+$('cTg').onclick=e=>{
+  const b=e.target.closest('.cue');if(!b)return;
+  const i=+b.dataset.i;S.cueOn[i]=!S.cueOn[i];
+  b.classList.toggle('off');updatePreview();
+};
+renderCues();
+
+// ---- PREVIEW UPDATE ----
+function updatePreview(){
+  $('pvN').textContent=S.name||'Session Name';
+  const sc=S.scale||1;
+  // Scale preview elements directly so flex-wrap recalculates
+  const pvN=$('pvN'),pvMk=$('pv').querySelector('.pv__mk'),pvInfo=$('pvInfo'),pvC=$('pvC');
+  pvN.style.fontSize=Math.max(6,Math.round(13*sc))+'px';
+  pvMk.style.fontSize=Math.max(5,Math.round(8*sc))+'px';
+  pvMk.style.letterSpacing=Math.round(4*sc)+'px';
+  pvInfo.style.fontSize=Math.max(4,Math.round(6*sc))+'px';
+
+  // Cues
+  if(S.show.cues){
+    const ac=S.cues.filter((_,i)=>S.cueOn[i]);
+    const cFs=Math.max(4,Math.round(6*sc));
+    const cPad=Math.max(2,Math.round(3*sc))+'px '+Math.max(3,Math.round(6*sc))+'px';
+    pvC.innerHTML=ac.map(c=>`<span class="pv__c" style="font-size:${cFs}px;padding:${cPad}">${c}</span>`).join('');
+    pvC.style.display=ac.length?'':'none';
+    pvC.style.gap=Math.max(1,Math.round(3*sc))+'px';
+  }else{pvC.style.display='none'}
+
+  // Info line
+  const parts=[];
+  const isEnd=S.mode==='running'||S.mode==='cycling';
+  if(isEnd&&S.dist&&S.show.dist)parts.push(S.dist.toUpperCase());
+  if(isEnd&&S.pace&&S.show.pace)parts.push(S.pace);
+  if(S.dur&&S.show.dur){
+    parts.push(S.dur.match(/\d+\s*(min|h|:)/i)?S.dur.toUpperCase():S.dur+' MIN');
   }
-};
-
-iM.oninput=()=>{
-  S.week=iM.value;
-  upWeek();
-};
-
-iDist.oninput=()=>{S.dist=iDist.value.trim();upEndMt()};
-iPace.oninput=()=>{S.pace=iPace.value.trim();upEndMt()};
-
-function upWeek(){
-  let t=S.week;
-  if(t&&t.match(/^\d+$/))t='WEEK '+t;
-  else if(t)t=t.toUpperCase();
-  pvW.textContent=t||'';
-  pvW.style.display=t?'':'none';
-}
-// Format detail for export — keep user input flexible
-function fmtDetail(w){
-  if(!w)return '';
-  if(w.match(/^\d+$/))return 'WEEK '+w;
-  return w.toUpperCase();
-}
-
-function upEndMt(){
-  const isEnd=S.contentMode==='running'||S.contentMode==='cycling';
-  if(!isEnd){pvMt.style.display='none';return}
-  pvMt.style.display='flex';
-  let html='';
-  if(S.dist)html+=`<div class="pv__mv"><div class="pv__ml">Distance</div><div class="pv__md">${S.dist.toUpperCase()}</div></div>`;
-  if(S.pace)html+=`<div class="pv__mv"><div class="pv__ml">${S.contentMode==='cycling'?'Speed':'Pace'}</div><div class="pv__md">${S.pace}</div></div>`;
-  if(S.dur)html+=`<div class="pv__mv"><div class="pv__ml">Duration</div><div class="pv__md">${S.dur.match(/\d+\s*(min|h|:)/i)?S.dur.toUpperCase():S.dur+' MIN'}</div></div>`;
-  pvMt.innerHTML=html;
-}
-
-function rCTg(){cTg.innerHTML=S.cues.map((c,i)=>`<button class="ct${S.cueOn[i]?'':' off'}" data-i="${i}">${c}</button>`).join('')}
-cTg.onclick=e=>{const b=e.target.closest('.ct');if(!b)return;const i=+b.dataset.i;S.cueOn[i]=!S.cueOn[i];b.classList.toggle('off');rPvC()};
-function rPvC(){pvC.innerHTML=S.cues.map((c,i)=>S.cueOn[i]?`<span class="pv__c">${c}</span>`:'').join('')}
-
-// ---- VARIANT TABS ----
-document.querySelectorAll('.vt').forEach(t=>{t.onclick=()=>{
-  document.querySelectorAll('.vt').forEach(x=>x.classList.remove('on'));t.classList.add('on');
-  S.variant=t.dataset.v;
-  pv.className='pv'+(S.url?' live':'')+(S.variant==='mini'?' mini':S.variant==='sticker'?' stk':'');
-  resizeSig();
-}});
-
-// ---- BACK / RESET ----
-$('bBack').onclick=()=>{go('up');reset()};
-function reset(){
-  pvI.style.display='none';pvV.style.display='none';pvV.pause();pvV.src='';
-  pvScr.classList.remove('sh');pv.className='pv';
-  iN.value='';iD.value='';iM.value='';iDist.value='';iPace.value='';
-  pvN.textContent="Today's Session";pvD.textContent='';pvD.style.display='none';
-  pvW.textContent='';pvW.style.display='none';
-  pvC.innerHTML='';pvC.style.display='none';
-  pvMt.innerHTML='';pvMt.style.display='none';
-  cTg.innerHTML='';sgEl.classList.remove('sh');
-  Object.assign(S,{name:'',dur:'',week:'',dist:'',pace:'',cues:[],cueOn:[true,true,true],url:null,fileType:null,imgO:null,variant:'full',contentMode:'exercise'});
-  $('fIn').value='';cBox.style.display='none';endR.style.display='none';
-  document.querySelectorAll('.vt').forEach((t,i)=>t.classList.toggle('on',i===0));
-}
-
-// ---- EXPORT ----
-let _exportData=null; // {type:'image',dataURL} or {type:'video',blob}
-
-$('bExport').onclick=async()=>{
-  go('ex');await new Promise(r=>setTimeout(r,450));
-  _exportData=null;
-
-  if(S.fileType==='video'&&S.variant!=='sticker'){
-    // VIDEO EXPORT — record canvas with overlay for up to 15s
-    $('exPv').innerHTML='<div style="color:rgba(255,255,255,.3);font:300 11px Outfit;letter-spacing:2px;text-align:center;padding-top:45%"><div class="rec-prog">RECORDING 0%</div><div style="margin-top:8px;font-size:9px;opacity:.5">Full video length</div></div>';
-    try{
-      const vBlob=await recordVideoExport();
-      _exportData={type:'video',blob:vBlob};
-      // Show video preview
-      const vid=document.createElement('video');
-      vid.src=URL.createObjectURL(vBlob);
-      vid.style.cssText='width:100%;height:100%;object-fit:contain;display:block;border-radius:14px';
-      vid.muted=true;vid.loop=true;vid.playsInline=true;vid.autoplay=true;
-      $('exPv').innerHTML='';$('exPv').appendChild(vid);
-      vid.play().catch(()=>{});
-    }catch(e){
-      console.error('Video export failed, falling back to image:',e);
-      // Fallback to image
-      const c=await renderCanvas();
-      const du=c.toDataURL('image/png');
-      _exportData={type:'image',dataURL:du};
-      const img=document.createElement('img');
-      img.src=du;img.style.cssText='width:100%;height:100%;object-fit:contain;display:block;border-radius:14px';
-      $('exPv').innerHTML='';$('exPv').appendChild(img);
-    }
-  }else{
-    // IMAGE EXPORT — single frame PNG
-    const c=await renderCanvas();
-    const du=c.toDataURL('image/png');
-    _exportData={type:'image',dataURL:du};
-    const img=document.createElement('img');
-    img.src=du;img.style.cssText='width:100%;height:100%;object-fit:contain;display:block;border-radius:14px';
-    $('exPv').innerHTML='';$('exPv').appendChild(img);
+  if(S.detail&&S.show.detail){
+    parts.push(S.detail.match(/^\d+$/)?'WEEK '+S.detail:S.detail.toUpperCase());
   }
-};
-
-async function recordVideoExport(){
-  // Match video's native dimensions — no cropping, no resizing
-  const vw=pvV.videoWidth,vh=pvV.videoHeight;
-  const W=vw||1080,H=vh||1920;
-  const c=document.createElement('canvas');c.width=W;c.height=H;
-  const x=c.getContext('2d');await document.fonts.ready;
-
-  const isMini=S.variant==='mini';
-  const isEnd=S.contentMode==='running'||S.contentMode==='cycling';
-  const nm=S.name||"Today's Session";
-  const dr=S.dur?(S.dur.match(/\d+\s*(min|h|:)/i)?S.dur.toUpperCase():S.dur+' MIN'):'';
-  const wk=S.week?(S.week.match(/^\d+$/)?'WEEK '+S.week:S.week.toUpperCase()):'';
-
-  // Full video length — start from beginning
-  const totalDur=pvV.duration||60;
-
-  // Setup MediaRecorder
-  const stream=c.captureStream(30);
-  const mime=MediaRecorder.isTypeSupported('video/mp4;codecs=avc1')?'video/mp4;codecs=avc1'
-    :MediaRecorder.isTypeSupported('video/webm;codecs=vp9')?'video/webm;codecs=vp9'
-    :'video/webm';
-  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:8000000});
-  const chunks=[];
-  rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};
-
-  return new Promise((resolve,reject)=>{
-    rec.onstop=()=>{
-      const blob=new Blob(chunks,{type:mime.split(';')[0]});
-      resolve(blob);
-    };
-    rec.onerror=e=>reject(e);
-
-    // Reset to start
-    pvV.currentTime=0;
-    pvV.muted=true;
-    pvV.loop=false;
-
-    let t=sigT;
-    let stopped=false;
-
-    function stopRec(){
-      if(stopped)return;stopped=true;
-      pvV.pause();
-      if(rec.state==='recording')rec.stop();
-    }
-
-    function frame(){
-      if(stopped)return;
-      // Draw video frame — native resolution, no crop
-      x.clearRect(0,0,W,H);
-      x.drawImage(pvV,0,0,W,H);
-      // Draw signature overlay
-      t+=.02;
-      drawSignature(x,W,H,S.variant,t);
-      // Draw content overlay
-      if(isMini) drawMini(x,W,H,nm,dr,wk,isEnd);
-      else drawFull(x,W,H,nm,dr,wk,isEnd);
-
-      // Update progress indicator
-      const pct=Math.round((pvV.currentTime/totalDur)*100);
-      const prog=$('exPv').querySelector('.rec-prog');
-      if(prog)prog.textContent='RECORDING '+pct+'%';
-
-      requestAnimationFrame(frame);
-    }
-
-    // Stop when video ends naturally
-    pvV.onended=()=>stopRec();
-    pvV.onpause=()=>{if(pvV.currentTime>=totalDur-.1)stopRec()};
-
-    // Start playback + recording
-    rec.start(100); // collect data every 100ms for reliability
-    pvV.play().then(()=>{
-      requestAnimationFrame(frame);
-    }).catch(()=>{
-      requestAnimationFrame(frame);
-    });
-
-    // Safety timeout — max 5 minutes
-    setTimeout(()=>stopRec(),Math.min(totalDur*1000+2000,300000));
-  });
+  pvInfo.textContent=parts.join('  ·  ');
+  pvInfo.style.display=parts.length?'':'none';
 }
+updatePreview();
 
-$('bSave').onclick=async()=>{
-  if(!_exportData)return;
-  $('bSave').textContent='SAVING...';
-  try{
-    if(_exportData.type==='video'){
-      // Save video file
-      const blob=_exportData.blob;
-      const ext=blob.type.includes('mp4')?'mp4':'webm';
-
-      if(navigator.share&&navigator.canShare){
-        const file=new File([blob],'voltr-share.'+ext,{type:blob.type});
-        if(navigator.canShare({files:[file]})){
-          await navigator.share({files:[file]});
-          sSt('Shared');$('bSave').textContent='SAVE';return;
-        }
-      }
-      const u=URL.createObjectURL(blob);const a=document.createElement('a');
-      a.href=u;a.download='voltr-'+Date.now()+'.'+ext;a.style.display='none';
-      document.body.appendChild(a);a.click();
-      requestAnimationFrame(()=>document.body.removeChild(a));
-      setTimeout(()=>URL.revokeObjectURL(u),10000);
-      sSt('Saved · 1080×1920 · '+ext.toUpperCase());
-    }else{
-      // Save image
-      const du=_exportData.dataURL;
-
-      if(navigator.share&&navigator.canShare){
-        const b64=atob(du.split(',')[1]);
-        const arr=new Uint8Array(b64.length);
-        for(let i=0;i<b64.length;i++)arr[i]=b64.charCodeAt(i);
-        const blob=new Blob([arr],{type:'image/png'});
-        const file=new File([blob],'voltr-share.png',{type:'image/png'});
-        if(navigator.canShare({files:[file]})){
-          await navigator.share({files:[file]});
-          sSt('Shared');$('bSave').textContent='SAVE';return;
-        }
-      }
-      const a=document.createElement('a');
-      a.href=du;a.download='voltr-'+Date.now()+'.png';a.style.display='none';
-      document.body.appendChild(a);a.click();
-      requestAnimationFrame(()=>document.body.removeChild(a));
-      sSt('Saved · 1080×1920');
-    }
-  }catch(e){
-    console.error('Save error:',e);
-    sSt('Error — check console');
-  }
-  $('bSave').textContent='SAVE';
-};
-function sSt(m){$('exSt').textContent=m;$('exSt').classList.add('sh');setTimeout(()=>$('exSt').classList.remove('sh'),2500)}
-$('bNew').onclick=()=>{go('up');reset();$('exPv').innerHTML='';_exportData=null};
-
-/* ================================================
-   CANVAS EXPORT — 1080 x 1920
-   Premium editorial. Strong VOLTR branding.
-   ================================================ */
-async function renderCanvas(){
-  const W=1080,H=1920,c=document.createElement('canvas');
-  c.width=W;c.height=H;
-  // No CSS sizing on export canvas — keeps full 1080x1920 resolution intact
-  const x=c.getContext('2d');await document.fonts.ready;
-
-  const isStk=S.variant==='sticker';
-  const isMini=S.variant==='mini';
-  const isEnd=S.contentMode==='running'||S.contentMode==='cycling';
-  const nm=S.name||"Today's Session";
-  const dr=S.dur?(S.dur.match(/\d+\s*(min|h|:)/i)?S.dur.toUpperCase():S.dur+' MIN'):'';
-  const wk=S.week?(S.week.match(/^\d+$/)?'WEEK '+S.week:S.week.toUpperCase()):'';
-
-  // ---- BACKGROUND ----
-  // Sticker: no fill → transparent PNG
-  if(isStk){
-    // intentionally empty — canvas stays transparent
-  }else{
-    let md=S.fileType==='video'?pvV:(S.imgO||pvI);
-    if(md&&(md.naturalWidth||md.videoWidth)){
-      const mw=md.videoWidth||md.naturalWidth,mh=md.videoHeight||md.naturalHeight;
-      const sc=Math.max(W/mw,H/mh),dw=mw*sc,dh=mh*sc;
-      x.drawImage(md,(W-dw)/2,(H-dh)/2,dw,dh);
-    }else{
-      x.fillStyle='#0a0a0a';x.fillRect(0,0,W,H);
-    }
-  }
-
-  // ---- SIGNATURE (skip for sticker — transparent bg) ----
-  if(!isStk) drawSignature(x,W,H,S.variant,sigT);
-
-  // ---- CONTENT ----
-  if(isStk) drawSticker(x,W,H,nm,dr,wk,isEnd);
-  else if(isMini) drawMini(x,W,H,nm,dr,wk,isEnd);
-  else drawFull(x,W,H,nm,dr,wk,isEnd);
-
-  return c;
-}
-
-// ---- HELPERS ----
+// ---- CANVAS EXPORT ----
 function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath()}
 
-function chip(c,t,cx,cy,small,stk){
-  const fs=small?12:15,px=small?10:13,h=small?24:32,r=small?12:16;
-  c.font=(stk?'400':'300')+' '+fs+'px Outfit';const tw=c.measureText(t).width,w=tw+px*2;
-  if(stk){
-    // Sticker chips: dark backdrop, survives any background
-    c.shadowColor='rgba(0,0,0,.5)';c.shadowBlur=12;
-    rr(c,cx,cy,w,h,r);c.fillStyle='rgba(0,0,0,.4)';c.fill();
-    c.shadowBlur=0;
-    rr(c,cx,cy,w,h,r);c.strokeStyle='rgba(255,255,255,.3)';c.lineWidth=1;c.stroke();
-    c.fillStyle='rgba(255,255,255,.9)';c.textAlign='left';c.textBaseline='middle';
-    c.fillText(t,cx+px,cy+h/2+1);
-  }else{
-    // Photo/video chips: glass with enough presence to survive IG
-    rr(c,cx,cy,w,h,r);c.fillStyle='rgba(0,0,0,.15)';c.fill();
-    rr(c,cx,cy,w,h,r);c.strokeStyle='rgba(255,255,255,.14)';c.lineWidth=.75;c.stroke();
-    c.fillStyle='rgba(255,255,255,.65)';c.textAlign='left';c.textBaseline='middle';
-    c.fillText(t,cx+px,cy+h/2+1);
-  }
-  return w+(small?5:7);
+function chip(c,t,cx,cy,sc){
+  sc=sc||1;
+  const fs=Math.round(32*sc),px=Math.round(28*sc),h=Math.round(48*sc),r=Math.round(24*sc);
+  c.font='400 '+fs+'px Outfit';const tw=c.measureText(t).width,w=tw+px*2;
+  c.shadowColor='rgba(0,0,0,.5)';c.shadowBlur=Math.round(24*sc);
+  rr(c,cx,cy,w,h,r);c.fillStyle='rgba(0,0,0,.4)';c.fill();
+  c.shadowBlur=0;
+  rr(c,cx,cy,w,h,r);c.strokeStyle='rgba(255,255,255,.3)';c.lineWidth=Math.max(1,Math.round(2*sc));c.stroke();
+  c.fillStyle='rgba(255,255,255,.9)';c.textAlign='left';c.textBaseline='middle';
+  c.fillText(t,cx+px,cy+h/2+1);
+  return w+Math.round(14*sc);
 }
 
-function voltrMark(c,vx,vy,al,sz,a,outline){
-  c.font=(sz>=28?'600':'500')+' '+sz+'px Outfit';
+function voltrMark(c,vx,vy,sz,a){
+  c.font='500 '+sz+'px Outfit';
   c.fillStyle='rgba(255,255,255,'+(a||.25)+')';
-  c.textBaseline='alphabetic';
+  c.textBaseline='alphabetic';c.textAlign='left';
   const sp=sz*.18,ch=[...'VOLTR.'];
   const widths=ch.map(l=>c.measureText(l).width);
-  const tw=widths.reduce((s,w)=>s+w,0)+sp*(ch.length-1);
-  let cx=al==='center'?vx-tw/2:vx;
-  c.textAlign='left';
-  if(outline){c.strokeStyle='rgba(0,0,0,.6)';c.lineWidth=2;c.lineJoin='round';c.miterLimit=2}
+  let cx=vx;
   for(let i=0;i<ch.length;i++){
-    if(outline)c.strokeText(ch[i],cx,vy);
     c.fillText(ch[i],cx,vy);
     cx+=widths[i]+(i<ch.length-1?sp:0);
   }
@@ -1118,177 +392,126 @@ function calcLines(c,text,maxW){
   if(line.trim())lines.push(line.trim());return lines;
 }
 
-// ---- FULL CARD ----
-function drawFull(c,W,H,nm,dr,wk,isEnd){
-  const mx=Math.round(W*.07);let cy=Math.round(H*.89);
+async function renderSticker(){
+  const W=1080,H=1920,c=document.createElement('canvas');
+  c.width=W;c.height=H;
+  const x=c.getContext('2d');await document.fonts.ready;
+  const sc=S.scale||1;
 
-  // VOLTR mark — centered signature anchor
-  voltrMark(c,W/2,cy,'center',28,.35);cy-=58;
-
-  if(isEnd){
-    // Endurance metrics row
-    let metricY=cy;
-    const metrics=[];
-    if(S.dist)metrics.push({l:'Distance',v:S.dist.toUpperCase()});
-    if(S.pace)metrics.push({l:S.contentMode==='cycling'?'Speed':'Pace',v:S.pace});
-    if(dr)metrics.push({l:'Duration',v:dr});
-    if(wk)metrics.push({l:'Week',v:wk});
-
-    if(metrics.length){
-      let mtx=mx;
-      for(const m of metrics){
-        c.font='500 12px Outfit';c.fillStyle='rgba(255,255,255,.28)';
-        c.textAlign='left';c.textBaseline='alphabetic';
-        c.fillText(m.l.toUpperCase(),mtx,metricY-32);
-        c.font='500 28px Outfit';c.fillStyle='rgba(255,255,255,.9)';
-        c.fillText(m.v,mtx,metricY);
-        mtx+=c.measureText(m.v).width+52;
-      }
-      cy=metricY-72;
-    }
-  }else{
-    // Duration + Week on one line
-    const infoLine=[];
-    if(dr)infoLine.push(dr);
-    if(wk)infoLine.push(wk);
-    if(infoLine.length){
-      c.font='300 19px Outfit';c.fillStyle='rgba(255,255,255,.32)';
-      c.textAlign='left';c.textBaseline='alphabetic';
-      c.fillText(infoLine.join('  ·  '),mx,cy);cy-=40;
-    }
-  }
-
-  // Cue chips — readable, editorial
-  const ac=S.cues.filter((_,i)=>S.cueOn[i]);
-  if(ac.length){let cx=mx;for(const q of ac)cx+=chip(c,q,cx,cy-30);cy-=56}
-
-  // Name — editorial, not shouting
-  cy-=2;
-  c.font='600 30px Outfit';c.fillStyle='#fff';c.textAlign='left';c.textBaseline='alphabetic';
-  c.shadowColor='rgba(0,0,0,.45)';c.shadowBlur=24;
-  const lines=calcLines(c,nm,W-mx*2);const lh=38;
-  for(let i=lines.length-1;i>=0;i--){c.fillText(lines[i],mx,cy);cy-=lh}
-  c.shadowBlur=0;
-}
-
-// ---- MINI OVERLAY ----
-function drawMini(c,W,H,nm,dr,wk,isEnd){
-  const mx=Math.round(W*.07);let cy=Math.round(H*.90);
-
-  // VOLTR mark — centered, calm presence
-  voltrMark(c,W/2,cy,'center',22,.28);cy-=40;
-
-  if(isEnd){
-    const parts=[];
-    if(S.dist)parts.push(S.dist.toUpperCase());
-    if(S.pace)parts.push(S.pace);
-    if(dr)parts.push(dr);
-    if(wk)parts.push(wk);
-    if(parts.length){
-      c.font='400 16px Outfit';c.fillStyle='rgba(255,255,255,.32)';
-      c.textAlign='left';c.textBaseline='alphabetic';
-      c.fillText(parts.join('  ·  '),mx,cy);cy-=30;
-    }
-  }else{
-    const infoLine=[];
-    if(dr)infoLine.push(dr);
-    if(wk)infoLine.push(wk);
-    if(infoLine.length){
-      c.font='300 16px Outfit';c.fillStyle='rgba(255,255,255,.32)';
-      c.textAlign='left';c.textBaseline='alphabetic';
-      c.fillText(infoLine.join('  ·  '),mx,cy);cy-=30;
-    }
-  }
-
-  // Cue chips — small but survives compression
-  const ac=S.cues.filter((_,i)=>S.cueOn[i]);
-  if(ac.length){let cx=mx;for(const q of ac)cx+=chip(c,q,cx,cy-22,true);cy-=42}
-
-  // Name — restrained, editorial
-  c.font='500 22px Outfit';c.fillStyle='#fff';c.textAlign='left';c.textBaseline='alphabetic';
-  c.shadowColor='rgba(0,0,0,.5)';c.shadowBlur=16;
-  const lines=calcLines(c,nm,W-mx*2);const lh=28;
-  for(let i=lines.length-1;i>=0;i--){c.fillText(lines[i],mx,cy);cy-=lh}
-  c.shadowBlur=0;
-}
-
-// ---- STICKER ----
-function drawSticker(c,W,H,nm,dr,wk,isEnd){
+  const nm=S.name||'Session Name';
   const mx=W*.1;
   let cy=H*.38;
 
-  // --- Measure content block height ---
-  c.save();
-  c.font='600 30px Outfit';
-  const lines=calcLines(c,nm,W*.72);const lh=38;
-  let blockH=lines.length*lh-14;
-  const ac=S.cues.filter((_,i)=>S.cueOn[i]);
-  if(ac.length)blockH+=40; // chipH + gap
-  const endParts=[];
-  if(isEnd){if(S.dist)endParts.push(1);if(S.pace)endParts.push(1);if(endParts.length)blockH+=26}
-  const infoLine=[];if(dr)infoLine.push(dr);if(wk)infoLine.push(wk);
-  if(infoLine.length)blockH+=24;
-  blockH+=(ac.length||infoLine.length)?74:46; // VOLTR mark + breathing (less when no cues)
-  c.restore();
+  // Scaled sizes — matched to preview (200px → 1080px = 5.4x)
+  const titleFs=Math.round(70*sc);
+  const chipFs=Math.round(32*sc);
+  const infoFs=Math.round(32*sc);
+  const markFs=Math.round(43*sc);
+  const lh=Math.round(84*sc);
+  const chipH=Math.round(48*sc);
 
-  // --- Atmospheric readability --- Apple lockscreen approach
-  // Very wide, very soft, completely diffused — NO visible dark spot
+  // Collect active data
+  const ac=S.show.cues?S.cues.filter((_,i)=>S.cueOn[i]):[];
+  const isEnd=S.mode==='running'||S.mode==='cycling';
+  const infoParts=[];
+  if(isEnd&&S.dist&&S.show.dist)infoParts.push(S.dist.toUpperCase());
+  if(isEnd&&S.pace&&S.show.pace)infoParts.push(S.pace);
+  if(S.dur&&S.show.dur)infoParts.push(S.dur.match(/\d+\s*(min|h|:)/i)?S.dur.toUpperCase():S.dur+' MIN');
+  if(S.detail&&S.show.detail)infoParts.push(S.detail.match(/^\d+$/)?'WEEK '+S.detail:S.detail.toUpperCase());
+
+  // Measure block
+  x.save();
+  x.font='600 '+titleFs+'px Outfit';
+  const lines=calcLines(x,nm,W*.72);
+  let blockH=lines.length*lh-Math.round(30*sc);
+  if(ac.length)blockH+=Math.round(64*sc);
+  if(infoParts.length)blockH+=Math.round(48*sc);
+  blockH+=(ac.length||infoParts.length)?Math.round(120*sc):Math.round(70*sc);
+  x.restore();
+
+  // Atmospheric gradient
   const bCy=cy-20+blockH/2;
   const spread=Math.max(blockH*1.2,340);
-
-  // Single ultra-wide gradient — covers entire sticker area atmospherically
-  const g1=c.createRadialGradient(W*.35,bCy,0,W*.35,bCy,spread*1.6);
+  const g1=x.createRadialGradient(W*.35,bCy,0,W*.35,bCy,spread*1.6);
   g1.addColorStop(0,'rgba(0,0,0,.32)');
   g1.addColorStop(.25,'rgba(0,0,0,.22)');
   g1.addColorStop(.5,'rgba(0,0,0,.12)');
   g1.addColorStop(.75,'rgba(0,0,0,.04)');
   g1.addColorStop(1,'rgba(0,0,0,0)');
-  c.fillStyle=g1;
-  c.fillRect(0,0,W,H);
+  x.fillStyle=g1;x.fillRect(0,0,W,H);
 
-  // --- Render content ---
-  // Name — confident, readable on anything
-  c.font='600 30px Outfit';c.fillStyle='rgba(255,255,255,.97)';c.textAlign='left';c.textBaseline='alphabetic';
-  c.shadowColor='rgba(0,0,0,.7)';c.shadowBlur=28;
-  for(const l of lines){c.fillText(l,mx,cy);cy+=lh}
-  c.shadowBlur=0;
-  cy-=14; // tight gap: title → cues (compensate line-height excess)
+  // Name
+  x.font='600 '+titleFs+'px Outfit';x.fillStyle='rgba(255,255,255,.97)';x.textAlign='left';x.textBaseline='alphabetic';
+  x.shadowColor='rgba(0,0,0,.7)';x.shadowBlur=Math.round(50*sc);
+  for(const l of lines){x.fillText(l,mx,cy);cy+=lh}
+  x.shadowBlur=0;
+  cy-=Math.round(30*sc);
 
-  // Cue chips — sticker mode (chip draws at cy, height=32px)
-  if(ac.length){let cx=mx;for(const q of ac)cx+=chip(c,q,cx,cy,false,true);cy+=32+8} // chipH + small gap to metadata
+  // Cue chips
+  if(ac.length){let cx=mx;for(const q of ac)cx+=chip(x,q,cx,cy,sc);cy+=chipH+Math.round(16*sc)}
 
-  // Endurance metrics
-  if(isEnd){
-    const parts=[];
-    if(S.dist)parts.push(S.dist.toUpperCase());
-    if(S.pace)parts.push(S.pace);
-    if(parts.length){
-      c.font='400 17px Outfit';c.fillStyle='rgba(255,255,255,.65)';
-      c.textAlign='left';c.textBaseline='alphabetic';
-      c.shadowColor='rgba(0,0,0,.6)';c.shadowBlur=14;
-      c.fillText(parts.join('  ·  '),mx,cy);cy+=26;
-      c.shadowBlur=0;
-    }
+  // Info line
+  if(infoParts.length){
+    x.font='300 '+infoFs+'px Outfit';x.fillStyle='rgba(255,255,255,.55)';
+    x.textAlign='left';x.textBaseline='alphabetic';
+    x.shadowColor='rgba(0,0,0,.5)';x.shadowBlur=Math.round(24*sc);
+    x.fillText(infoParts.join('  ·  '),mx,cy);cy+=Math.round(48*sc);
+    x.shadowBlur=0;
   }
 
-  // Duration + Week
-  if(infoLine.length){
-    c.font='300 15px Outfit';c.fillStyle='rgba(255,255,255,.55)';
-    c.textAlign='left';c.textBaseline='alphabetic';
-    c.shadowColor='rgba(0,0,0,.5)';c.shadowBlur=12;
-    c.fillText(infoLine.join('  ·  '),mx,cy);cy+=24;
-    c.shadowBlur=0;
-  }
+  // VOLTR mark
+  cy+=(ac.length||infoParts.length)?Math.round(80*sc):Math.round(36*sc);
+  x.shadowColor='rgba(0,0,0,.7)';x.shadowBlur=Math.round(32*sc);
+  voltrMark(x,mx,cy,markFs,.85);
+  x.shadowBlur=0;
 
-  // VOLTR mark — breathing adapts: less gap when no cues/metadata between title and mark
-  cy+=(ac.length||infoLine.length)?48:20;
-  c.shadowColor='rgba(0,0,0,.7)';c.shadowBlur=18;
-  voltrMark(c,mx,cy,'left',26,.85,false);
-  c.shadowBlur=0;
+  return c;
 }
 
-// ---- INIT ----
-new ResizeObserver(()=>resizeSig()).observe(pv);
+// ---- EXPORT ----
+let _exportData=null;
+
+$('bExport').onclick=async()=>{
+  $('exScr').classList.add('on');
+  const c=await renderSticker();
+  const du=c.toDataURL('image/png');
+  _exportData=du;
+  $('exPv').innerHTML=`<img src="${du}" style="width:100%;height:100%;object-fit:contain;display:block;border-radius:14px">`;
+};
+
+$('bSave').onclick=async()=>{
+  if(!_exportData)return;
+  $('bSave').textContent='SAVING...';
+  try{
+    const b64=atob(_exportData.split(',')[1]);
+    const arr=new Uint8Array(b64.length);
+    for(let i=0;i<b64.length;i++)arr[i]=b64.charCodeAt(i);
+    const blob=new Blob([arr],{type:'image/png'});
+
+    if(navigator.share&&navigator.canShare){
+      const file=new File([blob],'voltr-share.png',{type:'image/png'});
+      if(navigator.canShare({files:[file]})){
+        await navigator.share({files:[file]});
+        sSt('Shared');$('bSave').textContent='SAVE';return;
+      }
+    }
+    const a=document.createElement('a');
+    a.href=_exportData;a.download='voltr-'+Date.now()+'.png';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    sSt('Saved · 1080×1920');
+  }catch(e){console.error(e);sSt('Error')}
+  $('bSave').textContent='SAVE';
+};
+
+function sSt(m){$('exSt').textContent=m;$('exSt').classList.add('sh');setTimeout(()=>$('exSt').classList.remove('sh'),2500)}
+$('bNew').onclick=()=>{$('exScr').classList.remove('on');_exportData=null;$('exPv').innerHTML=''};
+
+// ---- HELP TOGGLE ----
+$('helpTog').onclick=()=>{
+  const body=$('helpBody'),arr=$('helpArr');
+  const open=body.classList.toggle('sh');
+  arr.textContent=open?'▾':'▸';
+};
 </script>
 </body>
 </html>
