@@ -23,9 +23,9 @@
 html,body{height:100%;overflow:hidden;background:var(--bg)}
 body{font-family:var(--f);color:var(--fg);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 input[type="file"]{display:none}
-#app{height:100%;width:100%;max-width:430px;margin:0 auto;position:relative;overflow:hidden}
+#app{height:100%;width:100%;max-width:430px;margin:0 auto;position:relative;overflow:hidden;-webkit-overflow-scrolling:touch}
 
-.scr{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;transform:translateX(24px);transition:opacity .4s var(--es),transform .4s var(--eo);pointer-events:none}
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateX(24px);transition:opacity .4s var(--es),transform .4s var(--eo);pointer-events:none}
 .scr.on{opacity:1;transform:none;pointer-events:auto}
 .scr.out{opacity:0;transform:translateX(-24px)}
 
@@ -105,7 +105,7 @@ video.pv__m{object-fit:cover}
 .vt.on{background:var(--fg05);color:var(--fg60)}
 
 /* Controls */
-.cu__ct{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:10px 20px 90px}
+.cu__ct{flex:1;overflow-y:auto;overflow-y:scroll;-webkit-overflow-scrolling:touch;padding:10px 20px 90px;touch-action:pan-y}
 .cg{margin-bottom:10px}
 .cl{font-size:7px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:var(--fg12);margin-bottom:5px}
 .ci{width:100%;background:var(--surf);border:1px solid var(--fg03);border-radius:10px;padding:11px 14px;color:var(--fg60);font-family:var(--f);font-size:13px;font-weight:300;outline:none;transition:border-color .4s}
