@@ -45,7 +45,7 @@ input[type="file"]{display:none}
 .up__ft{position:absolute;bottom:max(env(safe-area-inset-bottom,24px),24px);font-size:8px;font-weight:500;letter-spacing:6px;color:var(--fg05)}
 
 /* ==== CUSTOMIZE ==== */
-.cu{background:var(--bg);overflow:visible!important}
+.cu{background:var(--bg);overflow:hidden!important}
 .cu__hd{padding:10px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--fg03);flex-shrink:0}
 .cu__bk{background:none;border:none;color:var(--fg);font-family:var(--f);font-size:18px;font-weight:200;cursor:pointer;padding:6px 8px;opacity:.2;transition:opacity .3s;line-height:1}
 .cu__bk:active{opacity:.6}
@@ -105,7 +105,8 @@ video.pv__m{object-fit:cover}
 .vt.on{background:var(--fg05);color:var(--fg60)}
 
 /* Controls */
-.cu__ct{flex:1;min-height:0;overflow-y:scroll;-webkit-overflow-scrolling:touch;padding:10px 20px 90px;touch-action:pan-y}
+.cu__sc{flex:1;min-height:0;overflow-y:scroll;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+.cu__ct{padding:10px 20px 90px}
 .cg{margin-bottom:10px}
 .cl{font-size:7px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:var(--fg12);margin-bottom:5px}
 .ci{width:100%;background:var(--surf);border:1px solid var(--fg03);border-radius:10px;padding:11px 14px;color:var(--fg60);font-family:var(--f);font-size:13px;font-weight:300;outline:none;transition:border-color .4s}
@@ -161,40 +162,42 @@ video.pv__m{object-fit:cover}
       <div class="cu__md" id="modeLb">SESSION</div>
       <button class="cu__ex" id="bExport">Export</button>
     </div>
-    <div class="cu__pv">
-      <div class="pv" id="pv">
-        <img class="pv__m" id="pvI" style="display:none">
-        <video class="pv__m" id="pvV" muted loop playsinline webkit-playsinline style="display:none"></video>
-        <input type="range" class="pv__scr" id="pvScr" min="0" max="1000" value="0">
-        <canvas class="pv__sig" id="sigCv"></canvas>
-        <div class="pv__ct">
-          <div class="pv__nm" id="pvN">Today's Session</div>
-          <div class="pv__du" id="pvD" style="display:none"></div>
-          <div class="pv__cu" id="pvC" style="display:none"></div>
-          <div class="pv__mt" id="pvMt" style="display:none"></div>
-          <div class="pv__wk" id="pvW" style="display:none"></div>
-          <div class="pv__mk">VOLTR.</div>
+    <div class="cu__sc">
+      <div class="cu__pv">
+        <div class="pv" id="pv">
+          <img class="pv__m" id="pvI" style="display:none">
+          <video class="pv__m" id="pvV" muted loop playsinline webkit-playsinline style="display:none"></video>
+          <input type="range" class="pv__scr" id="pvScr" min="0" max="1000" value="0">
+          <canvas class="pv__sig" id="sigCv"></canvas>
+          <div class="pv__ct">
+            <div class="pv__nm" id="pvN">Today's Session</div>
+            <div class="pv__du" id="pvD" style="display:none"></div>
+            <div class="pv__cu" id="pvC" style="display:none"></div>
+            <div class="pv__mt" id="pvMt" style="display:none"></div>
+            <div class="pv__wk" id="pvW" style="display:none"></div>
+            <div class="pv__mk">VOLTR.</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="vtab">
-      <button class="vt on" data-v="full">Full Card</button>
-      <button class="vt" data-v="mini">Mini</button>
-      <button class="vt" data-v="sticker">Sticker</button>
-    </div>
-    <div class="cu__ct">
-      <div class="cg"><div class="cl" id="nmLb">Session Name</div><input class="ci" id="iN" type="text" placeholder="e.g. Lower Body - Posterior" autocomplete="off" spellcheck="false"><div class="sg" id="sg"></div></div>
-      <div class="cr">
-        <div class="cg"><div class="cl" id="durLb">Duration</div><input class="ci ci--s" id="iD" type="text" placeholder="e.g. 58 min"></div>
-        <div class="cg"><div class="cl" id="mtLb">Detail</div><input class="ci ci--s" id="iM" type="text" placeholder="e.g. Week 4 · 3×8 · RPE 8"></div>
+      <div class="vtab">
+        <button class="vt on" data-v="full">Full Card</button>
+        <button class="vt" data-v="mini">Mini</button>
+        <button class="vt" data-v="sticker">Sticker</button>
       </div>
-      <!-- Endurance fields — hidden by default, shown for running/cycling -->
-      <div class="cr" id="endR" style="display:none">
-        <div class="cg"><div class="cl">Distance</div><input class="ci ci--s" id="iDist" type="text" placeholder="e.g. 8.2 km"></div>
-        <div class="cg"><div class="cl" id="paceLb">Pace</div><input class="ci ci--s" id="iPace" type="text" placeholder="e.g. 5:12 /km"></div>
+      <div class="cu__ct">
+        <div class="cg"><div class="cl" id="nmLb">Session Name</div><input class="ci" id="iN" type="text" placeholder="e.g. Lower Body - Posterior" autocomplete="off" spellcheck="false"><div class="sg" id="sg"></div></div>
+        <div class="cr">
+          <div class="cg"><div class="cl" id="durLb">Duration</div><input class="ci ci--s" id="iD" type="text" placeholder="e.g. 58 min"></div>
+          <div class="cg"><div class="cl" id="mtLb">Detail</div><input class="ci ci--s" id="iM" type="text" placeholder="e.g. Week 4 · 3×8 · RPE 8"></div>
+        </div>
+        <!-- Endurance fields — hidden by default, shown for running/cycling -->
+        <div class="cr" id="endR" style="display:none">
+          <div class="cg"><div class="cl">Distance</div><input class="ci ci--s" id="iDist" type="text" placeholder="e.g. 8.2 km"></div>
+          <div class="cg"><div class="cl" id="paceLb">Pace</div><input class="ci ci--s" id="iPace" type="text" placeholder="e.g. 5:12 /km"></div>
+        </div>
+        <!-- Cue toggles — shown for ALL non-endurance inputs -->
+        <div class="cg" id="cBox" style="display:none"><div class="cl">Coaching Cues</div><div class="ctg" id="cTg"></div></div>
       </div>
-      <!-- Cue toggles — shown for ALL non-endurance inputs -->
-      <div class="cg" id="cBox" style="display:none"><div class="cl">Coaching Cues</div><div class="ctg" id="cTg"></div></div>
     </div>
   </div>
 
