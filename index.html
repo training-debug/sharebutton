@@ -4,108 +4,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>VOLTR.</title>
 <link rel="icon" type="image/jpeg" href="https://static.wixstatic.com/media/21cb00_8b1c2ce67e254e4a8f0ae5d8d2a182e4~mv2.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --f:'Outfit',sans-serif;
-  --bg:#070707;--fg:#fff;
-  --fg60:rgba(255,255,255,.6);--fg40:rgba(255,255,255,.4);
-  --fg25:rgba(255,255,255,.25);--fg20:rgba(255,255,255,.2);
-  --fg12:rgba(255,255,255,.12);--fg08:rgba(255,255,255,.08);
-  --fg05:rgba(255,255,255,.05);--fg03:rgba(255,255,255,.03);
-  --surf:#0f0f0f;--surf2:#161616;
-}
-html,body{height:100%;background:var(--bg);margin:0}
-body{font-family:var(--f);color:var(--fg);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+:root{--f:'Outfit',sans-serif}
+html,body{height:100%;margin:0;background:#fff}
+body{font-family:var(--f);color:#111;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
 
-/* App — simple scrollable page */
+/* App */
 #app{width:100%;max-width:430px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
 
 /* Header */
-.hd{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--fg03);flex-shrink:0}
-.hd__logo{font-weight:500;font-size:9px;letter-spacing:5px;color:var(--fg20)}
-.hd__ex{background:var(--fg);color:var(--bg);border:none;font-family:var(--f);font-size:8px;font-weight:500;letter-spacing:3px;text-transform:uppercase;padding:8px 20px;border-radius:40px;cursor:pointer;transition:all .3s}
-.hd__ex:active{opacity:.7;transform:scale(.97)}
+.hd{padding:16px 20px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #eee;flex-shrink:0}
+.hd__logo{font-weight:600;font-size:11px;letter-spacing:5px;color:#111}
 
 /* Main scrollable area */
-.main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 env(safe-area-inset-bottom,20px)}
+.main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 100px}
 
 /* Preview */
-.pv-wrap{padding:16px 20px 12px;display:flex;justify-content:center}
-.pv{position:relative;width:100%;max-width:200px;aspect-ratio:9/16;border-radius:12px;background:#0a0a0a;border:1px solid var(--fg05);overflow:hidden}
+.pv-wrap{padding:20px 20px 16px;display:flex;justify-content:center}
+.pv{position:relative;width:100%;max-width:240px;aspect-ratio:9/16;border-radius:14px;background:#111;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.12)}
 .pv__ct{position:absolute;top:0;bottom:0;left:0;right:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:10% 9%}
-.pv__nm{font-weight:600;font-size:clamp(11px,3.2vw,15px);line-height:1.15;color:var(--fg);margin-bottom:2px}
-.pv__cu{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px}
-.pv__c{font-size:clamp(5px,1.2vw,7px);font-weight:400;letter-spacing:.3px;padding:3px 6px;border-radius:9px;background:rgba(0,0,0,.12);border:1px solid var(--fg12);color:rgba(255,255,255,.6);white-space:nowrap;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.pv__info{font-weight:300;font-size:clamp(5px,1.1vw,7px);color:var(--fg25);letter-spacing:1px}
-.pv__mk{margin-top:10px;font-weight:500;font-size:clamp(7px,1.4vw,9px);letter-spacing:4px;color:var(--fg25)}
+.pv__nm{font-weight:600;font-size:clamp(11px,3.2vw,15px);line-height:1.15;color:#fff;margin-bottom:3px}
+.pv__cu{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px}
+.pv__c{font-size:clamp(5px,1.2vw,7px);font-weight:400;letter-spacing:.3px;padding:3px 6px;border-radius:9px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);white-space:nowrap}
+.pv__info{font-weight:300;font-size:clamp(5px,1.1vw,7px);color:rgba(255,255,255,.35);letter-spacing:1px}
+.pv__mk{margin-top:10px;font-weight:500;font-size:clamp(7px,1.4vw,9px);letter-spacing:4px;color:rgba(255,255,255,.3)}
+
+/* Section labels */
+.sec{padding:0 20px;margin-top:20px;margin-bottom:10px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#999}
 
 /* Fields */
 .fields{padding:0 20px}
-.field{margin-bottom:10px}
-.field__row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
-.field__label{font-size:7px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;color:var(--fg12);flex:1}
-.field__tog{width:32px;height:18px;border-radius:9px;border:none;background:var(--fg08);position:relative;cursor:pointer;transition:background .3s;flex-shrink:0}
-.field__tog.on{background:rgba(255,255,255,.25)}
-.field__tog::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--fg25);transition:all .3s}
-.field__tog.on::after{left:16px;background:var(--fg)}
-.field__input{width:100%;background:var(--surf);border:1px solid var(--fg03);border-radius:10px;padding:11px 14px;color:var(--fg60);font-family:var(--f);font-size:13px;font-weight:300;outline:none;transition:border-color .3s}
-.field__input:focus{border-color:var(--fg08)}
-.field__input::placeholder{color:var(--fg12)}
-.field__input--s{font-size:11px;padding:9px 12px}
-.field__slider{width:100%;-webkit-appearance:none;appearance:none;height:2px;background:var(--fg08);border-radius:2px;outline:none}
-.field__slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--fg);cursor:pointer}
-.field__pair{display:flex;gap:8px}
+.field{margin-bottom:14px}
+.field__row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.field__label{font-size:13px;font-weight:500;color:#555;flex:1}
+.field__tog{width:44px;height:26px;border-radius:13px;border:2px solid #ddd;background:#eee;position:relative;cursor:pointer;transition:all .3s;flex-shrink:0}
+.field__tog.on{background:#111;border-color:#111}
+.field__tog::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:all .3s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.field__tog.on::after{left:20px}
+.field__input{width:100%;background:#f5f5f5;border:2px solid #eee;border-radius:12px;padding:14px 16px;color:#111;font-family:var(--f);font-size:16px;font-weight:400;outline:none;transition:border-color .3s}
+.field__input:focus{border-color:#ccc}
+.field__input::placeholder{color:#bbb}
+.field__input--s{font-size:15px;padding:12px 14px}
+.field__slider{width:100%;-webkit-appearance:none;appearance:none;height:4px;background:#eee;border-radius:4px;outline:none}
+.field__slider::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#111;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.field__pair{display:flex;gap:10px}
 .field__pair .field{flex:1}
 
 /* Suggestions */
-.sg{display:none;flex-wrap:wrap;gap:3px;margin-top:5px}
+.sg{display:none;flex-wrap:wrap;gap:5px;margin-top:8px}
 .sg.sh{display:flex}
-.sgc{font-size:9px;font-weight:300;padding:4px 10px;border-radius:14px;background:var(--surf2);border:1px solid var(--fg03);color:var(--fg25);cursor:pointer;transition:all .3s;font-family:var(--f)}
-.sgc:active{background:var(--fg05);color:var(--fg60)}
+.sgc{font-size:13px;font-weight:400;padding:8px 14px;border-radius:20px;background:#f0f0f0;border:1px solid #e0e0e0;color:#555;cursor:pointer;transition:all .2s;font-family:var(--f)}
+.sgc:active{background:#e0e0e0;color:#111}
 
 /* Cue toggles */
-.cues{margin-top:5px;display:flex;flex-wrap:wrap;gap:4px}
-.cue{display:inline-flex;font-size:9px;font-weight:300;padding:4px 10px;border-radius:14px;background:var(--fg03);border:1px solid var(--fg05);color:var(--fg40);cursor:pointer;transition:all .3s;font-family:var(--f);white-space:nowrap}
-.cue.off{opacity:.2;background:transparent;border-color:var(--fg03)}
+.cues{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+.cue{display:inline-flex;font-size:13px;font-weight:400;padding:8px 14px;border-radius:20px;background:#f5f5f5;border:1px solid #e0e0e0;color:#555;cursor:pointer;transition:all .2s;font-family:var(--f);white-space:nowrap}
+.cue:active{background:#e8e8e8}
+.cue.off{opacity:.35;background:#fafafa;border-color:#eee;text-decoration:line-through}
 
-/* Export overlay */
-.ex{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;z-index:100;opacity:0;pointer-events:none;transition:opacity .3s}
-.ex.on{opacity:1;pointer-events:auto}
-.ex__inv{font-weight:500;font-size:15px;letter-spacing:3px;text-transform:uppercase;color:var(--fg40);margin-bottom:18px;text-align:center;line-height:1.6}
-.ex__pv{width:100%;max-width:260px;aspect-ratio:9/16;border-radius:14px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.5);margin-bottom:16px}
-.ex__pv img{width:100%;height:100%;object-fit:contain;display:block}
-.ex__ac{display:flex;gap:8px;width:100%;max-width:260px}
-.ex__b{flex:1;padding:10px;border-radius:10px;border:none;font-family:var(--f);font-size:8px;font-weight:500;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .3s}
-.ex__sv{background:var(--fg);color:var(--bg)}
-.ex__sv:active{opacity:.8;transform:scale(.98)}
-.ex__nw{background:var(--surf);color:var(--fg25);border:1px solid var(--fg03)}
-.ex__nw:active{background:var(--surf2)}
-.ex__st{margin-top:10px;font-size:8px;font-weight:300;letter-spacing:2px;color:var(--fg25);opacity:0;transition:opacity .6s}
-.ex__st.sh{opacity:1}
+/* Sticky export button */
+.sticky-ex{position:fixed;bottom:0;left:0;right:0;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:#fff;border-top:1px solid #eee;z-index:50;display:flex;justify-content:center}
+.sticky-ex__btn{width:100%;max-width:430px;padding:16px;border-radius:14px;border:none;background:#111;color:#fff;font-family:var(--f);font-size:15px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.sticky-ex__btn:active{opacity:.8;transform:scale(.98)}
 
 /* Help section */
-.help{margin:24px 20px 40px;background:var(--surf);border:1px solid var(--fg05);border-radius:12px;padding:14px 16px}
-.help__toggle{background:none;border:none;font-family:var(--f);font-size:9px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--fg25);cursor:pointer;padding:0;display:flex;align-items:center;gap:8px;width:100%}
-.help__toggle:active{color:var(--fg40)}
-.help__arrow{transition:transform .3s;font-size:11px}
-.help__body{display:none;margin-top:14px;font-size:12px;font-weight:300;color:var(--fg40);line-height:1.8}
+.help{margin:20px 20px 30px;background:#f8f8f8;border:1px solid #eee;border-radius:14px;padding:16px 18px}
+.help__toggle{background:none;border:none;font-family:var(--f);font-size:13px;font-weight:600;color:#999;cursor:pointer;padding:0;display:flex;align-items:center;gap:8px;width:100%}
+.help__toggle:active{color:#666}
+.help__arrow{transition:transform .3s;font-size:13px}
+.help__body{display:none;margin-top:14px;font-size:14px;font-weight:400;color:#777;line-height:1.8}
 .help__body.sh{display:block}
-.help__body p{margin-bottom:10px}
-.help__body strong{font-weight:500;color:var(--fg60)}
+.help__body p{margin-bottom:8px}
+.help__body strong{font-weight:600;color:#444}
 
-@media(min-width:431px){.pv{max-width:180px}}
+/* Export overlay — stays dark */
+.ex{position:fixed;inset:0;background:#070707;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;z-index:100;opacity:0;pointer-events:none;transition:opacity .3s}
+.ex.on{opacity:1;pointer-events:auto}
+.ex__inv{font-weight:500;font-size:14px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:18px;text-align:center;line-height:1.6}
+.ex__pv{width:100%;max-width:260px;aspect-ratio:9/16;border-radius:14px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.5);margin-bottom:16px}
+.ex__pv img{width:100%;height:100%;object-fit:contain;display:block}
+.ex__ac{display:flex;gap:10px;width:100%;max-width:260px}
+.ex__b{flex:1;padding:14px;border-radius:12px;border:none;font-family:var(--f);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.ex__sv{background:#fff;color:#111}
+.ex__sv:active{opacity:.8;transform:scale(.98)}
+.ex__nw{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1)}
+.ex__nw:active{background:rgba(255,255,255,.12)}
+.ex__st{margin-top:12px;font-size:12px;font-weight:400;letter-spacing:1px;color:rgba(255,255,255,.4);opacity:0;transition:opacity .6s}
+.ex__st.sh{opacity:1}
+
+@media(min-width:431px){.pv{max-width:220px}}
 </style>
 </head>
 <body>
 <div id="app">
   <div class="hd">
     <div class="hd__logo">VOLTR.</div>
-    <button class="hd__ex" id="bExport">EXPORT</button>
   </div>
   <div class="main">
     <div class="pv-wrap">
@@ -118,10 +115,12 @@ body{font-family:var(--f);color:var(--fg);-webkit-font-smoothing:antialiased;-we
         </div>
       </div>
     </div>
+
+    <div class="sec">Your Session</div>
     <div class="fields">
       <!-- Session Name -->
       <div class="field">
-        <div class="field__row"><div class="field__label">Session / Exercise Name</div></div>
+        <div class="field__row"><div class="field__label">Exercise / Session Name</div></div>
         <input class="field__input" id="iN" type="text" placeholder="e.g. Reverse Lunge" autocomplete="off" spellcheck="false">
         <div class="sg" id="sg"></div>
       </div>
@@ -149,7 +148,7 @@ body{font-family:var(--f);color:var(--fg);-webkit-font-smoothing:antialiased;-we
       </div>
       <!-- Size slider -->
       <div class="field">
-        <div class="field__row"><div class="field__label">Sticker Size</div><span class="field__label" id="sizeLb" style="text-align:right">100%</span></div>
+        <div class="field__row"><div class="field__label">Sticker Size</div><span style="font-size:13px;font-weight:500;color:#999" id="sizeLb">100%</span></div>
         <input type="range" class="field__slider" id="iSize" min="60" max="120" value="100" step="5">
       </div>
       <!-- Coaching Cues -->
@@ -158,8 +157,9 @@ body{font-family:var(--f);color:var(--fg);-webkit-font-smoothing:antialiased;-we
         <div class="cues" id="cTg"></div>
       </div>
     </div>
+
     <div class="help">
-      <button class="help__toggle" id="helpTog"><span class="help__arrow" id="helpArr">▸</span> How to use</button>
+      <button class="help__toggle" id="helpTog"><span class="help__arrow" id="helpArr">▸</span> How to use this tool</button>
       <div class="help__body" id="helpBody">
         <p><strong>1.</strong> Type your exercise or session name. Coaching cues load automatically.</p>
         <p><strong>2.</strong> Fill in Duration, Detail, or other fields as needed.</p>
@@ -171,6 +171,11 @@ body{font-family:var(--f);color:var(--fg);-webkit-font-smoothing:antialiased;-we
       </div>
     </div>
   </div>
+</div>
+
+<!-- Sticky export button -->
+<div class="sticky-ex">
+  <button class="sticky-ex__btn" id="bExport">Export Sticker</button>
 </div>
 
 <!-- Export overlay -->
@@ -222,7 +227,7 @@ const S={
   name:'',dur:'',detail:'',dist:'',pace:'',
   cues:FALLBACK,cueOn:[true,true,true],
   show:{dur:true,detail:true,cues:true,dist:true,pace:true},
-  mode:'exercise', // exercise | running | cycling
+  mode:'exercise',
   scale:1
 };
 
@@ -322,10 +327,9 @@ renderCues();
 
 // ---- PREVIEW UPDATE ----
 function updatePreview(){
-  $('pvN').textContent=S.name||'Session Name';
-  const sc=S.scale||1;
-  // Scale preview elements directly so flex-wrap recalculates
   const pvN=$('pvN'),pvMk=$('pv').querySelector('.pv__mk'),pvInfo=$('pvInfo'),pvC=$('pvC');
+  pvN.textContent=S.name||'Session Name';
+  const sc=S.scale||1;
   pvN.style.fontSize=Math.max(6,Math.round(13*sc))+'px';
   pvMk.style.fontSize=Math.max(5,Math.round(8*sc))+'px';
   pvMk.style.letterSpacing=Math.round(4*sc)+'px';
@@ -404,7 +408,6 @@ async function renderSticker(){
 
   // Scaled sizes — matched to preview (200px → 1080px = 5.4x)
   const titleFs=Math.round(70*sc);
-  const chipFs=Math.round(32*sc);
   const infoFs=Math.round(32*sc);
   const markFs=Math.round(43*sc);
   const lh=Math.round(84*sc);
